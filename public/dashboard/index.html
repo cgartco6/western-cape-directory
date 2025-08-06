@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Owner Dashboard</title>
+    <link href="../assets/css/dashboard.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <div class="dashboard">
+        <aside>
+            <h2>Owner Portal</h2>
+            <nav>
+                <a href="index.html" class="active">Overview</a>
+                <a href="payments.html">Payments</a>
+                <a href="growth.html">Growth</a>
+            </nav>
+        </aside>
+
+        <main>
+            <div class="metrics">
+                <div class="card">
+                    <h3>This Week</h3>
+                    <p class="revenue">R<span id="weekly-revenue">8,450</span></p>
+                </div>
+                <div class="card">
+                    <h3>New Listings</h3>
+                    <p class="count">47</p>
+                </div>
+            </div>
+
+            <div class="chart-container">
+                <canvas id="revenueChart"></canvas>
+            </div>
+
+            <div class="tables">
+                <div class="top-towns">
+                    <h3>Revenue by Town</h3>
+                    <table>
+                        <tr><th>Town</th><th>Amount</th></tr>
+                        <tr><td>Cape Town</td><td>R3,210</td></tr>
+                        <tr><td>Stellenbosch</td><td>R1,850</td></tr>
+                        <!-- Filled by API -->
+                    </table>
+                </div>
+                <div class="top-categories">
+                    <h3>Revenue by Industry</h3>
+                    <table>
+                        <tr><th>Category</th><th>Amount</th></tr>
+                        <tr><td>Restaurants</td><td>R2,400</td></tr>
+                        <tr><td>Real Estate</td><td>R4,100</td></tr>
+                        <!-- Filled by API -->
+                    </table>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        // Revenue chart
+        const ctx = document.getElementById('revenueChart').getContext('2d');
+        new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May'],
+                datasets: [{
+                    label: 'Monthly Revenue',
+                    data: [12500, 18700, 22400, 25600, 28900],
+                    borderColor: '#3a7bd5'
+                }]
+            }
+        });
+
+        // Auto-refresh data every 5 minutes
+        setInterval(() => {
+            fetch('/api/analytics.php')
+                .then(response => response.json())
+                .then(data => updateDashboard(data));
+        }, 300000);
+    </script>
+</body>
+</html>
