@@ -4,39 +4,1039 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Western Cape Business Directory</title>
-    <link href="assets/css/style.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+        
+        :root {
+            --primary: #1a2a6c;
+            --secondary: #b21f1f;
+            --accent: #f4a261;
+            --light: #f8f9fa;
+            --dark: #212529;
+            --success: #28a745;
+        }
+        
+        body {
+            background-color: #f5f7fa;
+            color: #333;
+            line-height: 1.6;
+        }
+        
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 15px;
+        }
+        
+        /* Header Styles */
+        header {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            padding: 10px 0;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+        
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .logo i {
+            font-size: 2rem;
+            color: var(--accent);
+        }
+        
+        .logo h1 {
+            font-size: 1.8rem;
+            font-weight: 700;
+        }
+        
+        .logo span {
+            color: var(--accent);
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 25px;
+        }
+        
+        nav a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            padding: 8px 12px;
+            border-radius: 5px;
+        }
+        
+        nav a:hover, nav a.active {
+            background-color: rgba(255, 255, 255, 0.15);
+        }
+        
+        .auth-buttons {
+            display: flex;
+            gap: 15px;
+        }
+        
+        .btn {
+            padding: 10px 20px;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            display: inline-block;
+            text-align: center;
+            border: none;
+        }
+        
+        .btn-primary {
+            background-color: var(--accent);
+            color: white;
+        }
+        
+        .btn-outline {
+            background-color: transparent;
+            border: 2px solid white;
+            color: white;
+        }
+        
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(rgba(26, 42, 108, 0.8), rgba(178, 31, 31, 0.8)), url('https://images.unsplash.com/photo-1587330979470-3595ac045ab0?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1740&q=80');
+            background-size: cover;
+            background-position: center;
+            color: white;
+            padding: 100px 0;
+            text-align: center;
+        }
+        
+        .hero-content {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .hero h2 {
+            font-size: 3rem;
+            margin-bottom: 20px;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+        }
+        
+        .hero p {
+            font-size: 1.2rem;
+            margin-bottom: 30px;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        .search-container {
+            background: white;
+            padding: 10px;
+            border-radius: 50px;
+            display: flex;
+            max-width: 600px;
+            margin: 0 auto;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+        
+        .search-container input {
+            flex: 1;
+            border: none;
+            padding: 15px 20px;
+            border-radius: 50px;
+            font-size: 1rem;
+            outline: none;
+        }
+        
+        .search-container button {
+            background: var(--accent);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 50px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+        
+        .search-container button:hover {
+            background: #e76f51;
+        }
+        
+        /* Towns Section */
+        .section {
+            padding: 80px 0;
+        }
+        
+        .section-title {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+        
+        .section-title h2 {
+            font-size: 2.5rem;
+            color: var(--primary);
+            margin-bottom: 15px;
+        }
+        
+        .section-title p {
+            color: #666;
+            font-size: 1.1rem;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+        
+        .towns-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 30px;
+        }
+        
+        .town-card {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.08);
+            transition: all 0.3s ease;
+        }
+        
+        .town-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+        }
+        
+        .town-image {
+            height: 200px;
+            background-size: cover;
+            background-position: center;
+        }
+        
+        .town-content {
+            padding: 20px;
+        }
+        
+        .town-content h3 {
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+            color: var(--primary);
+        }
+        
+        .business-count {
+            color: var(--secondary);
+            font-weight: 600;
+            margin-bottom: 15px;
+            display: block;
+        }
+        
+        .view-businesses {
+            display: inline-block;
+            color: var(--accent);
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+        
+        .view-businesses:hover {
+            color: #e76f51;
+        }
+        
+        /* Pricing Section */
+        .pricing {
+            background-color: #f0f4f8;
+        }
+        
+        .pricing-tabs {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 40px;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        
+        .pricing-tab {
+            padding: 12px 25px;
+            background: white;
+            border-radius: 50px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            border: 2px solid #e0e6ed;
+        }
+        
+        .pricing-tab.active {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+        }
+        
+        .pricing-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+        }
+        
+        .pricing-card {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.08);
+            text-align: center;
+            transition: all 0.3s ease;
+            position: relative;
+            border: 2px solid #e0e6ed;
+        }
+        
+        .pricing-card.featured {
+            border: 2px solid var(--accent);
+            transform: scale(1.05);
+        }
+        
+        .pricing-card.featured::before {
+            content: 'Most Popular';
+            position: absolute;
+            top: 15px;
+            right: -30px;
+            background: var(--accent);
+            color: white;
+            padding: 5px 30px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            transform: rotate(45deg);
+        }
+        
+        .pricing-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+        }
+        
+        .pricing-header {
+            padding: 30px 20px;
+            background: linear-gradient(to right, var(--primary), var(--secondary));
+            color: white;
+        }
+        
+        .pricing-name {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+        
+        .pricing-price {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
+        
+        .pricing-period {
+            font-size: 1rem;
+            opacity: 0.8;
+        }
+        
+        .pricing-features {
+            padding: 30px 20px;
+        }
+        
+        .pricing-features ul {
+            list-style: none;
+            margin-bottom: 30px;
+        }
+        
+        .pricing-features li {
+            padding: 10px 0;
+            border-bottom: 1px solid #eee;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .pricing-features li i {
+            color: var(--success);
+        }
+        
+        /* Dashboard Section */
+        .dashboard {
+            background: linear-gradient(to right, #2c3e50, #1a2a6c);
+            color: white;
+        }
+        
+        .dashboard-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+        
+        .dashboard-card {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            padding: 30px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .dashboard-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+            color: var(--accent);
+        }
+        
+        .stats {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+        }
+        
+        .stat-item {
+            text-align: center;
+        }
+        
+        .stat-value {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
+        
+        .stat-label {
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+        
+        .chart-container {
+            height: 250px;
+            margin-top: 20px;
+        }
+        
+        /* Footer */
+        footer {
+            background: var(--dark);
+            color: white;
+            padding: 60px 0 30px;
+        }
+        
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+        
+        .footer-column h3 {
+            font-size: 1.3rem;
+            margin-bottom: 20px;
+            color: var(--accent);
+        }
+        
+        .footer-column ul {
+            list-style: none;
+        }
+        
+        .footer-column ul li {
+            margin-bottom: 10px;
+        }
+        
+        .footer-column ul li a {
+            color: #aaa;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+        
+        .footer-column ul li a:hover {
+            color: white;
+            padding-left: 5px;
+        }
+        
+        .social-links {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .social-links a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            color: white;
+            transition: all 0.3s ease;
+        }
+        
+        .social-links a:hover {
+            background: var(--accent);
+            transform: translateY(-5px);
+        }
+        
+        .copyright {
+            text-align: center;
+            padding-top: 30px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: #aaa;
+            font-size: 0.9rem;
+        }
+        
+        /* Responsive */
+        @media (max-width: 992px) {
+            .hero h2 {
+                font-size: 2.5rem;
+            }
+            
+            nav ul {
+                gap: 15px;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            .hero {
+                padding: 60px 0;
+            }
+            
+            .hero h2 {
+                font-size: 2rem;
+            }
+            
+            .section {
+                padding: 60px 0;
+            }
+            
+            .pricing-card.featured {
+                transform: scale(1);
+            }
+        }
+        
+        @media (max-width: 576px) {
+            .search-container {
+                flex-direction: column;
+                border-radius: 15px;
+            }
+            
+            .search-container input {
+                margin-bottom: 10px;
+                border-radius: 15px;
+            }
+            
+            .search-container button {
+                border-radius: 15px;
+            }
+            
+            .auth-buttons {
+                width: 100%;
+                justify-content: center;
+            }
+        }
+    </style>
 </head>
 <body>
+    <!-- Header -->
     <header>
-        <nav>
-            <a href="/">Home</a>
-            <a href="listings.html">Directory</a>
-            <a href="pricing.html">List Your Business</a>
-            <a href="dashboard/" class="owner-login">Owner Login</a>
-        </nav>
-        <div class="hero" style="background-image: url('assets/img/cape-town-hero.jpg')">
-            <h1>Western Cape Business Hub</h1>
-            <p>AI-powered directory for local businesses</p>
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <i class="fas fa-map-marked-alt"></i>
+                    <h1>Western <span>Cape</span> Biz</h1>
+                </div>
+                
+                <nav>
+                    <ul>
+                        <li><a href="#" class="active">Home</a></li>
+                        <li><a href="#towns">Towns</a></li>
+                        <li><a href="#pricing">Pricing</a></li>
+                        <li><a href="#dashboard">Dashboard</a></li>
+                        <li><a href="#">Businesses</a></li>
+                    </ul>
+                </nav>
+                
+                <div class="auth-buttons">
+                    <a href="#" class="btn btn-outline">Login</a>
+                    <a href="#pricing" class="btn btn-primary">List Your Business</a>
+                </div>
+            </div>
         </div>
     </header>
 
-    <section class="towns">
-        <h2>Browse by Town</h2>
-        <div class="town-grid">
-            <!-- AI will generate these dynamically -->
-            <div class="town-card">
-                <img src="assets/img/cape-town.jpg" alt="Cape Town">
-                <h3>Cape Town</h3>
-                <p>1245 businesses</p>
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <h2>Discover Businesses Across the Western Cape</h2>
+                <p>AI-powered business directory connecting customers with local services. Find what you need, when you need it.</p>
+                
+                <div class="search-container">
+                    <input type="text" placeholder="Search for businesses, services or categories...">
+                    <button><i class="fas fa-search"></i> Search</button>
+                </div>
             </div>
-            <!-- Repeat for all towns -->
         </div>
     </section>
 
+    <!-- Towns Section -->
+    <section id="towns" class="section">
+        <div class="container">
+            <div class="section-title">
+                <h2>Browse by Town</h2>
+                <p>Explore businesses in these beautiful Western Cape towns</p>
+            </div>
+            
+            <div class="towns-grid">
+                <div class="town-card">
+                    <div class="town-image" style="background-image: url('https://images.unsplash.com/photo-1568901346375-23c9450c58cd?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1598&q=80');"></div>
+                    <div class="town-content">
+                        <h3>Cape Town</h3>
+                        <span class="business-count">1,245 Businesses</span>
+                        <p>South Africa's oldest city and legislative capital with iconic Table Mountain backdrop.</p>
+                        <a href="#" class="view-businesses">View Businesses →</a>
+                    </div>
+                </div>
+                
+                <div class="town-card">
+                    <div class="town-image" style="background-image: url('https://images.unsplash.com/photo-1607007314250-3d8f7aebd3a0?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1740&q=80');"></div>
+                    <div class="town-content">
+                        <h3>Stellenbosch</h3>
+                        <span class="business-count">578 Businesses</span>
+                        <p>Famous for its vineyards, Cape Dutch architecture and prestigious university.</p>
+                        <a href="#" class="view-businesses">View Businesses →</a>
+                    </div>
+                </div>
+                
+                <div class="town-card">
+                    <div class="town-image" style="background-image: url('https://images.unsplash.com/photo-1593692909680-1e7a90a7d25f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1740&q=80');"></div>
+                    <div class="town-content">
+                        <h3>Hermanus</h3>
+                        <span class="business-count">324 Businesses</span>
+                        <p>World-renowned for whale watching with stunning coastal scenery.</p>
+                        <a href="#" class="view-businesses">View Businesses →</a>
+                    </div>
+                </div>
+                
+                <div class="town-card">
+                    <div class="town-image" style="background-image: url('https://images.unsplash.com/photo-1591808787696-6daafd56a7b2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1740&q=80');"></div>
+                    <div class="town-content">
+                        <h3>Franschhoek</h3>
+                        <span class="business-count">287 Businesses</span>
+                        <p>Gourmet capital of South Africa with French heritage and wine estates.</p>
+                        <a href="#" class="view-businesses">View Businesses →</a>
+                    </div>
+                </div>
+                
+                <div class="town-card">
+                    <div class="town-image" style="background-image: url('https://images.unsplash.com/photo-1593692909680-1e7a90a7d25f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1740&q=80');"></div>
+                    <div class="town-content">
+                        <h3>Knysna</h3>
+                        <span class="business-count">215 Businesses</span>
+                        <p>Famous for its lagoon, forest and the iconic Knysna Heads.</p>
+                        <a href="#" class="view-businesses">View Businesses →</a>
+                    </div>
+                </div>
+                
+                <div class="town-card">
+                    <div class="town-image" style="background-image: url('https://images.unsplash.com/photo-1573767291321-c0af2eaf5269?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1740&q=80');"></div>
+                    <div class="town-content">
+                        <h3>Paarl</h3>
+                        <span class="business-count">302 Businesses</span>
+                        <p>Known for its dramatic mountain backdrop and historic Cape Dutch architecture.</p>
+                        <a href="#" class="view-businesses">View Businesses →</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pricing Section -->
+    <section id="pricing" class="section pricing">
+        <div class="container">
+            <div class="section-title">
+                <h2>Business Listing Packages</h2>
+                <p>Choose the perfect package for your business needs</p>
+            </div>
+            
+            <div class="pricing-tabs">
+                <div class="pricing-tab active">All Businesses</div>
+                <div class="pricing-tab">Real Estate</div>
+                <div class="pricing-tab">Premium</div>
+            </div>
+            
+            <div class="pricing-grid">
+                <div class="pricing-card">
+                    <div class="pricing-header">
+                        <div class="pricing-name">Free</div>
+                        <div class="pricing-price">R0</div>
+                        <div class="pricing-period">per month</div>
+                    </div>
+                    <div class="pricing-features">
+                        <ul>
+                            <li><i class="fas fa-check-circle"></i> Business Name</li>
+                            <li><i class="fas fa-check-circle"></i> Contact Number</li>
+                            <li><i class="fas fa-check-circle"></i> Address</li>
+                            <li><i class="fas fa-check-circle"></i> 2 Photos</li>
+                            <li><i class="fas fa-check-circle"></i> Basic Category Listing</li>
+                            <li><i class="fas fa-check-circle"></i> 2 Free Daily Posts</li>
+                        </ul>
+                        <a href="#" class="btn btn-primary">Get Started</a>
+                    </div>
+                </div>
+                
+                <div class="pricing-card featured">
+                    <div class="pricing-header">
+                        <div class="pricing-name">Bronze</div>
+                        <div class="pricing-price">R99</div>
+                        <div class="pricing-period">per month</div>
+                    </div>
+                    <div class="pricing-features">
+                        <ul>
+                            <li><i class="fas fa-check-circle"></i> Everything in Free</li>
+                            <li><i class="fas fa-check-circle"></i> 5 Photos</li>
+                            <li><i class="fas fa-check-circle"></i> Enhanced Listing Placement</li>
+                            <li><i class="fas fa-check-circle"></i> Basic Analytics</li>
+                            <li><i class="fas fa-check-circle"></i> AI Photo Enhancement</li>
+                            <li><i class="fas fa-check-circle"></i> Priority Support</li>
+                        </ul>
+                        <a href="#" class="btn btn-primary">Choose Plan</a>
+                    </div>
+                </div>
+                
+                <div class="pricing-card">
+                    <div class="pricing-header">
+                        <div class="pricing-name">Silver</div>
+                        <div class="pricing-price">R249</div>
+                        <div class="pricing-period">per month</div>
+                    </div>
+                    <div class="pricing-features">
+                        <ul>
+                            <li><i class="fas fa-check-circle"></i> Everything in Bronze</li>
+                            <li><i class="fas fa-check-circle"></i> 10 Photos</li>
+                            <li><i class="fas fa-check-circle"></i> 1 Video</li>
+                            <li><i class="fas fa-check-circle"></i> Priority Placement</li>
+                            <li><i class="fas fa-check-circle"></i> Advanced Analytics</li>
+                            <li><i class="fas fa-check-circle"></i> AI Media Enhancement</li>
+                        </ul>
+                        <a href="#" class="btn btn-primary">Choose Plan</a>
+                    </div>
+                </div>
+                
+                <div class="pricing-card">
+                    <div class="pricing-header">
+                        <div class="pricing-name">Platinum</div>
+                        <div class="pricing-price">R599</div>
+                        <div class="pricing-period">per month</div>
+                    </div>
+                    <div class="pricing-features">
+                        <ul>
+                            <li><i class="fas fa-check-circle"></i> Everything in Silver</li>
+                            <li><i class="fas fa-check-circle"></i> 30 Photos</li>
+                            <li><i class="fas fa-check-circle"></i> 3 Videos</li>
+                            <li><i class="fas fa-check-circle"></i> Featured Placement</li>
+                            <li><i class="fas fa-check-circle"></i> Premium Analytics Dashboard</li>
+                            <li><i class="fas fa-check-circle"></i> AI 4K Enhancement</li>
+                        </ul>
+                        <a href="#" class="btn btn-primary">Choose Plan</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Dashboard Section -->
+    <section id="dashboard" class="section dashboard">
+        <div class="container">
+            <div class="section-title">
+                <h2>Owner Dashboard</h2>
+                <p>AI-powered insights and analytics for your business directory</p>
+            </div>
+            
+            <div class="dashboard-content">
+                <div class="dashboard-card">
+                    <h3>Revenue Overview</h3>
+                    <div class="stats">
+                        <div class="stat-item">
+                            <div class="stat-value">R24,580</div>
+                            <div class="stat-label">Monthly Revenue</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-value">R3,215</div>
+                            <div class="stat-label">Weekly Payout</div>
+                        </div>
+                    </div>
+                    <div class="chart-container">
+                        <canvas id="revenueChart"></canvas>
+                    </div>
+                </div>
+                
+                <div class="dashboard-card">
+                    <h3>Business Growth</h3>
+                    <div class="stats">
+                        <div class="stat-item">
+                            <div class="stat-value">2,847</div>
+                            <div class="stat-label">Total Businesses</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-value">+127</div>
+                            <div class="stat-label">New This Month</div>
+                        </div>
+                    </div>
+                    <div class="chart-container">
+                        <canvas id="growthChart"></canvas>
+                    </div>
+                </div>
+                
+                <div class="dashboard-card">
+                    <h3>Top Performing Towns</h3>
+                    <div class="stats">
+                        <div class="stat-item">
+                            <div class="stat-value">Cape Town</div>
+                            <div class="stat-label">R8,240 Revenue</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-value">Stellenbosch</div>
+                            <div class="stat-label">R4,850 Revenue</div>
+                        </div>
+                    </div>
+                    <div class="chart-container">
+                        <canvas id="townChart"></canvas>
+                    </div>
+                </div>
+                
+                <div class="dashboard-card">
+                    <h3>AI Agent Status</h3>
+                    <div class="stats">
+                        <div class="stat-item">
+                            <div class="stat-value">12</div>
+                            <div class="stat-label">Active Agents</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-value">100%</div>
+                            <div class="stat-label">System Health</div>
+                        </div>
+                    </div>
+                    <div class="ai-status">
+                        <p><i class="fas fa-check-circle" style="color: #28a745;"></i> Hosting: Active on Afrihost Silver</p>
+                        <p><i class="fas fa-check-circle" style="color: #28a745;"></i> Security: Military Grade Active</p>
+                        <p><i class="fas fa-check-circle" style="color: #28a745;"></i> Payments: FNB Integration Active</p>
+                        <p><i class="fas fa-check-circle" style="color: #28a745;"></i> AI Marketing: Running</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
     <footer>
-        <p>© 2023 AI-Run Business Directory | Hosted on Afrihost</p>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>Western Cape Biz</h3>
+                    <p>The premier AI-powered business directory for the Western Cape. Connecting businesses and customers since 2023.</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                    </div>
+                </div>
+                
+                <div class="footer-column">
+                    <h3>Quick Links</h3>
+                    <ul>
+                        <li><a href="#">Home</a></li>
+                        <li><a href="#towns">Browse Towns</a></li>
+                        <li><a href="#pricing">Listing Packages</a></li>
+                        <li><a href="#">Add Your Business</a></li>
+                        <li><a href="#">Customer Support</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-column">
+                    <h3>Town Directories</h3>
+                    <ul>
+                        <li><a href="#">Cape Town</a></li>
+                        <li><a href="#">Stellenbosch</a></li>
+                        <li><a href="#">Hermanus</a></li>
+                        <li><a href="#">Franschhoek</a></li>
+                        <li><a href="#">Paarl</a></li>
+                        <li><a href="#">Knysna</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-column">
+                    <h3>Contact Us</h3>
+                    <ul>
+                        <li><i class="fas fa-envelope"></i> info@westerncapebiz.co.za</li>
+                        <li><i class="fas fa-phone"></i> +27 21 123 4567</li>
+                        <li><i class="fas fa-map-marker-alt"></i> Cape Town, Western Cape</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="copyright">
+                <p>&copy; 2023 Western Cape Business Directory. All Rights Reserved. Powered by AI Agents.</p>
+            </div>
+        </div>
     </footer>
 
-    <script src="assets/js/main.js"></script>
+    <script>
+        // Charts for Dashboard
+        document.addEventListener('DOMContentLoaded', function() {
+            // Revenue Chart
+            const revenueCtx = document.getElementById('revenueChart').getContext('2d');
+            const revenueChart = new Chart(revenueCtx, {
+                type: 'line',
+                data: {
+                    labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
+                    datasets: [{
+                        label: 'Monthly Revenue (R)',
+                        data: [12500, 18700, 22400, 25600, 28900, 31500],
+                        borderColor: '#f4a261',
+                        backgroundColor: 'rgba(244, 162, 97, 0.1)',
+                        fill: true,
+                        tension: 0.3
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            display: false
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            grid: {
+                                color: 'rgba(255, 255, 255, 0.1)'
+                            },
+                            ticks: {
+                                color: 'rgba(255, 255, 255, 0.7)'
+                            }
+                        },
+                        x: {
+                            grid: {
+                                color: 'rgba(255, 255, 255, 0.1)'
+                            },
+                            ticks: {
+                                color: 'rgba(255, 255, 255, 0.7)'
+                            }
+                        }
+                    }
+                }
+            });
+            
+            // Growth Chart
+            const growthCtx = document.getElementById('growthChart').getContext('2d');
+            const growthChart = new Chart(growthCtx, {
+                type: 'bar',
+                data: {
+                    labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
+                    datasets: [{
+                        label: 'New Businesses',
+                        data: [85, 112, 98, 145, 176, 212],
+                        backgroundColor: 'rgba(40, 167, 69, 0.7)',
+                        borderColor: 'rgba(40, 167, 69, 1)',
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            display: false
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            grid: {
+                                color: 'rgba(255, 255, 255, 0.1)'
+                            },
+                            ticks: {
+                                color: 'rgba(255, 255, 255, 0.7)'
+                            }
+                        },
+                        x: {
+                            grid: {
+                                color: 'rgba(255, 255, 255, 0.1)'
+                            },
+                            ticks: {
+                                color: 'rgba(255, 255, 255, 0.7)'
+                            }
+                        }
+                    }
+                }
+            });
+            
+            // Town Chart
+            const townCtx = document.getElementById('townChart').getContext('2d');
+            const townChart = new Chart(townCtx, {
+                type: 'doughnut',
+                data: {
+                    labels: ['Cape Town', 'Stellenbosch', 'Hermanus', 'Franschhoek', 'Other'],
+                    datasets: [{
+                        data: [35, 20, 15, 12, 18],
+                        backgroundColor: [
+                            '#1a2a6c',
+                            '#b21f1f',
+                            '#f4a261',
+                            '#28a745',
+                            '#6f42c1'
+                        ],
+                        borderWidth: 0
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            position: 'right',
+                            labels: {
+                                color: 'rgba(255, 255, 255, 0.7)',
+                                padding: 20
+                            }
+                        }
+                    }
+                }
+            });
+            
+            // Pricing tab functionality
+            const pricingTabs = document.querySelectorAll('.pricing-tab');
+            pricingTabs.forEach(tab => {
+                tab.addEventListener('click', () => {
+                    pricingTabs.forEach(t => t.classList.remove('active'));
+                    tab.classList.add('active');
+                });
+            });
+        });
+    </script>
 </body>
 </html>
