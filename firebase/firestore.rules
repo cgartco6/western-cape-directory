@@ -1,0 +1,32 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Allow anyone to read listings
+    match /listings/{listing} {
+      allow read: if true;
+      allow create: if request.auth != null && 
+                    request.resource.data.images.size() <= 1 &&
+                    !request.resource.data.keys().hasAny(['video']);
+      allow update: if request.auth.uid == resource.data.ownerId;
+      allow delete: if request.auth.uid == resource.data.ownerId;
+    }
+    
+    // Area documents are read-only
+    match /areas/{area} {
+      allow read: if true;
+      allow write: if false;
+    }
+    
+    // User documents
+    match /users/{userId} {
+      allow read, update, delete: if request.auth.uid == userId;
+      allow create: if true;
+    }
+    
+    // Transactions are write-only for cloud functions
+    match /transactions/{transaction} {
+      allow read: if false;
+      allow write: if request.auth.token.admin == true;
+    }
+  }
+}
