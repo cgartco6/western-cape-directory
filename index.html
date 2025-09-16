@@ -1,0 +1,847 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Western Cape Business Directory | AI-Powered Platform</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #1a73e8;
+            --secondary: #0d47a1;
+            --accent: #ff6d00;
+            --light: #f5f7fa;
+            --dark: #1e293b;
+            --success: #10b981;
+            --gradient: linear-gradient(135deg, var(--primary), var(--secondary));
+        }
+        
+        body {
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            color: #334155;
+            background-color: #f8fafc;
+            line-height: 1.6;
+        }
+        
+        .navbar {
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            background: white !important;
+        }
+        
+        .hero-section {
+            background: var(--gradient), url('https://images.unsplash.com/photo-1580060839134-75a5edca2e99?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2071&q=80') center/cover;
+            color: white;
+            padding: 100px 0;
+            border-radius: 0 0 20px 20px;
+        }
+        
+        .card {
+            border: none;
+            border-radius: 12px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+            transition: transform 0.3s, box-shadow 0.3s;
+            overflow: hidden;
+        }
+        
+        .card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+        }
+        
+        .btn-primary {
+            background: var(--gradient);
+            border: none;
+            padding: 12px 28px;
+            border-radius: 50px;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(26, 115, 232, 0.3);
+        }
+        
+        .section-title {
+            position: relative;
+            margin-bottom: 40px;
+            font-weight: 700;
+            color: var(--dark);
+        }
+        
+        .section-title:after {
+            content: '';
+            position: absolute;
+            bottom: -15px;
+            left: 0;
+            width: 60px;
+            height: 4px;
+            background: var(--gradient);
+            border-radius: 2px;
+        }
+        
+        .section-title.center:after {
+            left: 50%;
+            transform: translateX(-50%);
+        }
+        
+        .ai-badge {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: var(--gradient);
+            color: white;
+            padding: 6px 12px;
+            border-radius: 50px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+        
+        .pricing-card {
+            border: 2px solid #e2e8f0;
+            border-radius: 16px;
+            transition: all 0.3s;
+        }
+        
+        .pricing-card.featured {
+            border-color: var(--primary);
+            transform: scale(1.03);
+            box-shadow: 0 20px 40px rgba(26, 115, 232, 0.15);
+        }
+        
+        .stats-box {
+            background: white;
+            border-radius: 12px;
+            padding: 25px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+            text-align: center;
+            height: 100%;
+        }
+        
+        .stats-box i {
+            font-size: 2.5rem;
+            color: var(--primary);
+            margin-bottom: 15px;
+        }
+        
+        .ai-agent-card {
+            background: white;
+            border-radius: 16px;
+            padding: 25px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+            height: 100%;
+            text-align: center;
+            transition: all 0.3s;
+        }
+        
+        .ai-agent-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+        }
+        
+        .ai-agent-card img {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-bottom: 20px;
+            border: 3px solid var(--primary);
+        }
+        
+        .security-badge {
+            display: inline-block;
+            background: linear-gradient(135deg, #10b981, #059669);
+            color: white;
+            padding: 6px 15px;
+            border-radius: 50px;
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 15px;
+        }
+        
+        footer {
+            background: var(--dark);
+            color: white;
+            padding: 60px 0 30px;
+        }
+        
+        .social-icon {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.1);
+            color: white;
+            margin-right: 10px;
+            transition: all 0.3s;
+        }
+        
+        .social-icon:hover {
+            background: var(--primary);
+            transform: translateY(-3px);
+        }
+        
+        /* AI Assistant Animation */
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+        
+        .ai-pulse {
+            animation: pulse 2s infinite;
+        }
+        
+        /* Chatbot Styles */
+        .chatbot-container {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 350px;
+            z-index: 1000;
+            transition: all 0.3s;
+            transform: translateY(calc(100% - 60px));
+            height: 450px;
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .chatbot-container.open {
+            transform: translateY(0);
+        }
+        
+        .chatbot-header {
+            background: var(--gradient);
+            color: white;
+            padding: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        
+        .chatbot-messages {
+            flex: 1;
+            padding: 15px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        
+        .message {
+            max-width: 80%;
+            padding: 10px 15px;
+            border-radius: 18px;
+        }
+        
+        .message.bot {
+            background: #f1f5f9;
+            align-self: flex-start;
+            border-bottom-left-radius: 5px;
+        }
+        
+        .message.user {
+            background: var(--primary);
+            color: white;
+            align-self: flex-end;
+            border-bottom-right-radius: 5px;
+        }
+        
+        .chatbot-input {
+            padding: 15px;
+            border-top: 1px solid #e2e8f0;
+            display: flex;
+            gap: 10px;
+        }
+        
+        .chatbot-input input {
+            flex: 1;
+            border: 1px solid #e2e8f0;
+            border-radius: 20px;
+            padding: 10px 15px;
+            outline: none;
+        }
+        
+        .chatbot-toggle {
+            position: absolute;
+            top: -50px;
+            right: 0;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: var(--gradient);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+        
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .hero-section {
+                padding: 60px 0;
+                text-align: center;
+            }
+            
+            .section-title:after {
+                left: 50%;
+                transform: translateX(-50%);
+            }
+            
+            .chatbot-container {
+                width: 300px;
+                right: 10px;
+                bottom: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-light sticky-top">
+        <div class="container">
+            <a class="navbar-brand" href="#">
+                <img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAiIGhlaWdodD0iNDAiIHZpZXdCb3g9IjAgMCA0MCA0MCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHJlY3Qgd2lkdGg9IjQwIiBoZWlnaHQ9IjQwIiByeD0iOCIgZmlsbD0iIzFhNzNlOCIvPgo8cGF0aCBkPSJNMTAgMTVIMzBWMTlIMTBWMTVaIiBmaWxsPSJ3aGl0ZSIvPgo8cGF0aCBkPSJNMTAgMjJIMzBWMjZIMTBWMjJaIiBmaWxsPSJ3aGl0ZSIvPgo8cGF0aCBkPSJNMTAgMjlIMzBWMzNIMTBWMjlaIiBmaWxsPSJ3aGl0ZSIvPgo8L3N2Zz4K" alt="Logo" class="me-2" width="40" height="40">
+                <span class="fw-bold text-primary">CapeBiz Directory</span>
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="#home">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#areas">Areas</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#pricing">Pricing</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#ai-team">AI Team</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#security">Security</a>
+                    </li>
+                </ul>
+                <div class="d-flex">
+                    <a href="#" class="btn btn-outline-primary me-2">Login</a>
+                    <a href="#" class="btn btn-primary">Add Your Business</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero-section" id="home">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-7">
+                    <h1 class="display-4 fw-bold mb-4">Western Cape's Premier Business Directory</h1>
+                    <p class="lead mb-4">AI-powered platform connecting businesses with customers across the Western Cape</p>
+                    <div class="d-flex flex-wrap gap-2">
+                        <a href="#areas" class="btn btn-light btn-lg">Explore Businesses</a>
+                        <a href="#pricing" class="btn btn-outline-light btn-lg">List Your Business</a>
+                    </div>
+                </div>
+                <div class="col-lg-5 d-none d-lg-block">
+                    <div class="card overflow-hidden">
+                        <div class="ai-badge">AI Powered</div>
+                        <div class="card-body p-4">
+                            <h5 class="card-title">AI Business Assistant</h5>
+                            <p class="card-text">Hi! I'm your AI assistant. I can help you find the perfect business or list your own in seconds!</p>
+                            <div class="input-group mb-3">
+                                <input type="text" class="form-control" placeholder="Ask me anything...">
+                                <button class="btn btn-primary">Ask</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Stats Section -->
+    <section class="py-5">
+        <div class="container">
+            <div class="row g-4">
+                <div class="col-md-3 col-6">
+                    <div class="stats-box">
+                        <i class="fas fa-building"></i>
+                        <h3 class="fw-bold">2,458</h3>
+                        <p class="text-muted">Businesses Listed</p>
+                    </div>
+                </div>
+                <div class="col-md-3 col-6">
+                    <div class="stats-box">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <h3 class="fw-bold">48</h3>
+                        <p class="text-muted">Towns & Areas</p>
+                    </div>
+                </div>
+                <div class="col-md-3 col-6">
+                    <div class="stats-box">
+                        <i class="fas fa-users"></i>
+                        <h3 class="fw-bold">15,892</h3>
+                        <p class="text-muted">Active Users</p>
+                    </div>
+                </div>
+                <div class="col-md-3 col-6">
+                    <div class="stats-box">
+                        <i class="fas fa-search"></i>
+                        <h3 class="fw-bold">42,356</h3>
+                        <p class="text-muted">Monthly Searches</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- AI Agents Section -->
+    <section class="py-5 bg-light" id="ai-team">
+        <div class="container">
+            <h2 class="section-title center">Our AI Team</h2>
+            <p class="text-center text-muted mb-5">Meet the synthetic intelligence team that runs our platform 24/7</p>
+            
+            <div class="row g-4">
+                <div class="col-md-3 col-6">
+                    <div class="ai-agent-card">
+                        <img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTUwIiBoZWlnaHQ9IjE1MCIgdmlld0JveD0iMCAwIDE1MCAxNTAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSIxNTAiIGhlaWdodD0iMTUwIiByeD0iNzUiIGZpbGw9IiMxYTczZTgiLz4KPHN2ZyB4PSI0MCIgeT0iNDAiIHdpZHRoPSI3MCIgaGVpZ2h0PSI3MCIgdmlld0JveD0iMCAwIDI0IDI0IiBmaWxsPSJub25lIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgo8cGF0aCBkPSJNMTIgMTVBMTMgMTMgMCAxIDAgMTIgNDVBMTMgMTMgMCAwIDAgMTIgMTVaIiBmaWxsPSJ3aGl0ZSIvPgo8cGF0aCBkPSJNMTAgMTVIMTRWMTlIMTBWMTVaIiBmaWxsPSIjMWE3M2U4Ii8+CjxwYXRoIGQ9Ik0xNiAxNUgyMFYxOUgxNlYxNVoiIGZpbGw9IiMxYTczZTgiLz4KPHBhdGggZD0iTTcgMzNIMTdWMzVIN1YzM1oiIGZpbGw9IiMxYTczZTgiLz4KPC9zdmc+Cjwvc3ZnPg==" alt="Marketing AI">
+                        <h5>Marketing AI</h5>
+                        <p class="text-muted">Promotes businesses across social media platforms</p>
+                        <div class="security-badge">Active</div>
+                    </div>
+                </div>
+                <div class="col-md-3 col-6">
+                    <div class="ai-agent-card">
+                        <img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTUwIiBoZWlnaHQ9IjE1MCIgdmlld0JveD0iMCAwIDE1MCAxNTAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSIxNTAiIGhlaWdodD0iMTUwIiByeD0iNzUiIGZpbGw9IiMxYTczZTgiLz4KPHN2ZyB4PSI0MCIgeT0iNDAiIHdpZHRoPSI3MCIgaGVpZ2h0PSI3MCIgdmlld0JveD0iMCAwIDI0IDI0IiBmaWxsPSJub25lIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgo8cGF0aCBkPSJNMTIgMTVBNyA3IDAgMSAwIDEyIDFBNyA3IDAgMCAwIDEyIDE1WiIgZmlsbD0id2hpdGUiLz4KPHBhdGggZD0iTTEyIDE2QzggMTYgNSAxNyA1IDE5VjIxSDE5VjE5QzE5IDE3IDE2IDE2IDEyIDE2WiIgZmlsbD0iIzFhNzNlOCIvPgo8cGF0aCBkPSJNMTkgOEgxNlY2QzE2IDQuOSAxNS4xIDQgMTQgNEgxMEM4LjkgNCA4IDQuOSA4IDZWOEg1TDMgMTBWMjBINi4xQzYuNCAyMC44IDcuMSAyMS40IDggMjEuOFYyMkgxNlYyMS44QzE2LjkgMjEuNCAxNy42IDIwLjggMTcuOSAyMEgyMVYxMEwxOSA4WiIgZmlsbD0iIzFhNzNlOCIvPgo8L3N2Zz4KPC9zdmc+" alt="Security AI">
+                        <h5>Security AI</h5>
+                        <p class="text-muted">Military-grade protection against threats</p>
+                        <div class="security-badge">Active</div>
+                    </div>
+                </div>
+                <div class="col-md-3 col-6">
+                    <div class="ai-agent-card">
+                        <img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTUwIiBoZWlnaHQ9IjE1MCIgdmlld0JveD0iMCAwIDE1MCAxNTAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSIxNTAiIGhlaWdodD0iMTUwIiByeD0iNzUiIGZpbGw9IiMxYTczZTgiLz4KPHN2ZyB4PSI0MCIgeT0iNDAiIHdpZHRoPSI3MCIgaGVpZ2h0PSI3MCIgdmlld0JveD0iMCAwIDI0IDI0IiBmaWxsPSJub25lIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgo8cGF0aCBkPSJNMTIgMkM2LjQ4IDIgMiA2LjQ4IDIgMTJTNi40OCAyMiAxMiAyMkMxNy41MiAyMiAyMiAxNy41MiAyMiAxMlMxNy41MiAyIDEyIDJaTTEzIDkuNzRWMThIMTFWOS43NEgxM1pNMTMgOEgxMVY2SDEzVjhaIiBmaWxsPSJ3aGl0ZSIvPgo8L3N2Zz4KPC9zdmc+" alt="Payment AI">
+                        <h5>Payment AI</h5>
+                        <p class="text-muted">Handles transactions and revenue distribution</p>
+                        <div class="security-badge">Active</div>
+                    </div>
+                </div>
+                <div class="col-md-3 col-6">
+                    <div class="ai-agent-card">
+                        <img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTUwIiBoZWlnaHQ9IjE1MCIgdmlld0JveD0iMCAwIDE1MCAxNTAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSIxNTAiIGhlaWdodD0iMTUwIiByeD0iNzUiIGZpbGw9IiMxYTczZTgiLz4KPHN2ZyB4PSI0MCIgeT0iNDAiIHdpZHRoPSI3MCIgaGVpZ2h0PSI3MCIgdmlld0JveD0iMCAwIDI0IDI0IiBmaWxsPSJub25lIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgo8cGF0aCBkPSJNMTIgMkM2LjQ4IDIgMiA2LjQ4IDIgMTJTNi40OCAyMiAxMiAyMkMxNy41MiAyMiAyMiAxNy41MiAyMiAxMlMxNy41MiAyIDEyIDJaTTEzIDE3SDExVjE1SDEzVjE3Wk0xMyAxM0gxMVY3SDEzVjEzWiIgZmlsbD0id2hpdGUiLz4KPC9zdmc+Cjwvc3ZnPg==" alt="Support AI">
+                        <h5>Support AI</h5>
+                        <p class="text-muted">Provides 24/7 customer support</p>
+                        <div class="security-badge">Active</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Areas Section -->
+    <section class="py-5" id="areas">
+        <div class="container">
+            <h2 class="section-title">Explore by Area</h2>
+            <p class="text-muted mb-4">Browse businesses across the Western Cape's diverse regions</p>
+            
+            <div class="row g-4">
+                <div class="col-md-4">
+                    <div class="card">
+                        <img src="https://images.unsplash.com/photo-1544197158-b0bcf1d0f68a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80" class="card-img-top" alt="West Coast">
+                        <div class="card-body">
+                            <h5 class="card-title">West Coast</h5>
+                            <p class="card-text">Langebaan, Saldanha, Velddrif, Yzerfontein and more</p>
+                            <a href="#" class="btn btn-sm btn-outline-primary">Explore 342 businesses</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card">
+                        <img src="https://images.unsplash.com/photo-1593537612373-cc8e584186b9?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80" class="card-img-top" alt="Winelands">
+                        <div class="card-body">
+                            <h5 class="card-title">Winelands</h5>
+                            <p class="card-text">Stellenbosch, Franschhoek, Paarl, Wellington and more</p>
+                            <a href="#" class="btn btn-sm btn-outline-primary">Explore 587 businesses</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card">
+                        <img src="https://images.unsplash.com/photo-1580060839134-75a5edca2e99?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2071&q=80" class="card-img-top" alt="Cape Metro">
+                        <div class="card-body">
+                            <h5 class="card-title">Cape Metro</h5>
+                            <p class="card-text">Cape Town CBD, Southern Suburbs, Northern Suburbs and more</p>
+                            <a href="#" class="btn btn-sm btn-outline-primary">Explore 1,204 businesses</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="text-center mt-4">
+                <a href="#" class="btn btn-outline-primary">View All Areas</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pricing Section -->
+    <section class="py-5 bg-light" id="pricing">
+        <div class="container">
+            <h2 class="section-title center">Transparent Pricing</h2>
+            <p class="text-center text-muted mb-5">Choose the perfect plan for your business with our AI-recommended options</p>
+            
+            <div class="row g-4">
+                <div class="col-md-4">
+                    <div class="pricing-card text-center h-100">
+                        <div class="card-body p-5">
+                            <h5 class="card-title">Free Listing</h5>
+                            <h2 class="my-4">R0</h2>
+                            <ul class="list-unstyled mb-4">
+                                <li class="mb-2">Basic business information</li>
+                                <li class="mb-2">1 photo</li>
+                                <li class="mb-2">Appears in search results</li>
+                                <li class="mb-2 text-muted"><s>Priority placement</s></li>
+                                <li class="mb-2 text-muted"><s>Video content</s></li>
+                            </ul>
+                            <a href="#" class="btn btn-outline-primary">Get Started</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="pricing-card featured text-center h-100">
+                        <div class="card-body p-5">
+                            <span class="badge bg-primary mb-3">MOST POPULAR</span>
+                            <h5 class="card-title">Premium</h5>
+                            <h2 class="my-4">R199<span class="h6">/month</span></h2>
+                            <ul class="list-unstyled mb-4">
+                                <li class="mb-2">10+ photos</li>
+                                <li class="mb-2">1 video showcase</li>
+                                <li class="mb-2">Priority placement</li>
+                                <li class="mb-2">Advanced analytics</li>
+                                <li class="mb-2">AI-powered recommendations</li>
+                            </ul>
+                            <a href="#" class="btn btn-primary">Get Started</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="pricing-card text-center h-100">
+                        <div class="card-body p-5">
+                            <h5 class="card-title">Enterprise</h5>
+                            <h2 class="my-4">R999<span class="h6">/month</span></h2>
+                            <ul class="list-unstyled mb-4">
+                                <li class="mb-2">Unlimited media</li>
+                                <li class="mb-2">360° virtual tours</li>
+                                <li class="mb-2">Top placement in search</li>
+                                <li class="mb-2">Dedicated AI support</li>
+                                <li class="mb-2">Marketing campaigns</li>
+                            </ul>
+                            <a href="#" class="btn btn-outline-primary">Contact Sales</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Security Section -->
+    <section class="py-5" id="security">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-6">
+                    <h2 class="section-title">Military-Grade Security</h2>
+                    <p class="mb-4">Our AI-powered security system protects your business and customer data with advanced encryption and threat detection.</p>
+                    
+                    <div class="d-flex mb-3">
+                        <div class="me-4">
+                            <i class="fas fa-shield-alt fa-2x text-primary mb-2"></i>
+                            <h5>Advanced Protection</h5>
+                            <p class="text-muted">Real-time threat detection and prevention</p>
+                        </div>
+                        <div>
+                            <i class="fas fa-lock fa-2x text-primary mb-2"></i>
+                            <h5>Data Encryption</h5>
+                            <p class="text-muted">All data encrypted in transit and at rest</p>
+                        </div>
+                    </div>
+                    
+                    <div class="d-flex">
+                        <div class="me-4">
+                            <i class="fas fa-sync-alt fa-2x text-primary mb-2"></i>
+                            <h5>AI Monitoring</h5>
+                            <p class="text-muted">Continuous learning and adaptation to new threats</p>
+                        </div>
+                        <div>
+                            <i class="fas fa-user-shield fa-2x text-primary mb-2"></i>
+                            <h5>Anti-Fraud</h5>
+                            <p class="text-muted">Advanced algorithms detect and prevent fraud</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="card">
+                        <div class="card-body p-4 text-center">
+                            <i class="fas fa-lock fa-4x text-primary mb-3"></i>
+                            <h4>Secure Payment Processing</h4>
+                            <p class="text-muted">All transactions are processed securely with bank-level encryption</p>
+                            <div class="row mt-4">
+                                <div class="col-6">
+                                    <i class="fab fa-cc-visa fa-2x mb-2"></i>
+                                    <p>Visa</p>
+                                </div>
+                                <div class="col-6">
+                                    <i class="fab fa-cc-mastercard fa-2x mb-2"></i>
+                                    <p>Mastercard</p>
+                                </div>
+                                <div class="col-6">
+                                    <i class="fab fa-cc-amex fa-2x mb-2"></i>
+                                    <p>American Express</p>
+                                </div>
+                                <div class="col-6">
+                                    <img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTAwIiBoZWlnaHQ9IjQwIiB2aWV3Qm94PSIwIDAgMTAwIDQwIiBmaWxsPSJub25lIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgo8cmVjdCB3aWR0aD0iMTAwIiBoZWlnaHQ9IjQwIiByeD0iNCIgZmlsbD0iIzAwN0JGNSIvPgo8cGF0aCBkPSJNNDAgMTJIMzVWMTdINDBWMjBIMjVWMTJIMjBWMjBIMTVWMTJIMTBWMjBINVYxMkgwVjI4SDQwVjEyWiIgZmlsbD0id2hpdGUiLz4KPHBhdGggZD0iTTYwIDEySDU1VjE3SDYwVjIwSDU1VjI4SDY1VjI0SDcwVjI4SDgwVjIwSDc1VjE3SDgwVjEySDc1VjE3SDcwVjEySDY1VjE3SDYwVjEyWiIgZmlsbD0id2hpdGUiLz4KPHBhdGggZD0iTTkwIDI4VjEyaC01djE2aDVaIiBmaWxsPSJ3aGl0ZSIvPgo8L3N2Zz4K" alt="PayFast" width="40" height="25" class="mb-2">
+                                    <p>PayFast</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="py-5 bg-primary text-white">
+        <div class="container text-center">
+            <h2 class="mb-4">Ready to Grow Your Business?</h2>
+            <p class="lead mb-4">Join hundreds of Western Cape businesses already benefiting from our AI-powered platform</p>
+            <a href="#" class="btn btn-light btn-lg mx-2">List Your Business</a>
+            <a href="#" class="btn btn-outline-light btn-lg mx-2">Learn More</a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-4 mb-4">
+                    <h5 class="text-white mb-4">CapeBiz Directory</h5>
+                    <p>The Western Cape's premier AI-powered business directory, connecting businesses with customers since 2023.</p>
+                    <div class="mt-4">
+                        <a href="#" class="social-icon"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" class="social-icon"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="social-icon"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="social-icon"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="#" class="social-icon"><i class="fab fa-tiktok"></i></a>
+                    </div>
+                </div>
+                <div class="col-lg-2 col-md-4 mb-4">
+                    <h5 class="text-white mb-4">Quick Links</h5>
+                    <ul class="list-unstyled">
+                        <li class="mb-2"><a href="#home" class="text-light text-decoration-none">Home</a></li>
+                        <li class="mb-2"><a href="#areas" class="text-light text-decoration-none">Areas</a></li>
+                        <li class="mb-2"><a href="#pricing" class="text-light text-decoration-none">Pricing</a></li>
+                        <li class="mb-2"><a href="#ai-team" class="text-light text-decoration-none">AI Team</a></li>
+                        <li class="mb-2"><a href="#security" class="text-light text-decoration-none">Security</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-2 col-md-4 mb-4">
+                    <h5 class="text-white mb-4">Areas</h5>
+                    <ul class="list-unstyled">
+                        <li class="mb-2"><a href="#" class="text-light text-decoration-none">West Coast</a></li>
+                        <li class="mb-2"><a href="#" class="text-light text-decoration-none">Winelands</a></li>
+                        <li class="mb-2"><a href="#" class="text-light text-decoration-none">Cape Metro</a></li>
+                        <li class="mb-2"><a href="#" class="text-light text-decoration-none">Overberg</a></li>
+                        <li class="mb-2"><a href="#" class="text-light text-decoration-none">Garden Route</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-4 col-md-4 mb-4">
+                    <h5 class="text-white mb-4">Contact Us</h5>
+                    <ul class="list-unstyled">
+                        <li class="mb-2"><i class="fas fa-envelope me-2"></i> info@capebiz.co.za</li>
+                        <li class="mb-2"><i class="fas fa-phone me-2"></i> 072 142 3215</li>
+                        <li class="mb-2"><i class="fas fa-map-marker-alt me-2"></i> Cape Town, Western Cape</li>
+                    </ul>
+                    <div class="mt-4">
+                        <div class="security-badge">AI-Powered & Secure</div>
+                    </div>
+                </div>
+            </div>
+            <hr class="bg-light">
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <p class="mb-0">&copy; 2023 CapeBiz Directory. All rights reserved.</p>
+                </div>
+                <div class="col-md-6 text-md-end">
+                    <a href="#" class="text-light text-decoration-none me-3">Privacy Policy</a>
+                    <a href="#" class="text-light text-decoration-none me-3">Terms of Service</a>
+                    <a href="#" class="text-light text-decoration-none">Cookie Policy</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- AI Assistant Widget -->
+    <div class="chatbot-container" id="chatbot">
+        <div class="chatbot-toggle" onclick="toggleChatbot()">
+            <i class="fas fa-robot"></i>
+        </div>
+        <div class="chatbot-header">
+            <div>
+                <h6 class="mb-0">AI Business Assistant</h6>
+                <small>Ready to help you 24/7</small>
+            </div>
+            <button class="btn btn-sm btn-light" onclick="toggleChatbot()">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+        <div class="chatbot-messages" id="chatbot-messages">
+            <div class="message bot">
+                Hi there! I'm your AI assistant. How can I help you today?
+            </div>
+            <div class="message bot">
+                I can help you find businesses, list your own, or answer any questions about our platform.
+            </div>
+        </div>
+        <div class="chatbot-input">
+            <input type="text" id="chatbot-input" placeholder="Type your message here...">
+            <button class="btn btn-primary btn-sm" onclick="sendMessage()">
+                <i class="fas fa-paper-plane"></i>
+            </button>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // AI Assistant functionality
+        let chatbotOpen = false;
+        
+        function toggleChatbot() {
+            const chatbot = document.getElementById('chatbot');
+            chatbotOpen = !chatbotOpen;
+            
+            if (chatbotOpen) {
+                chatbot.classList.add('open');
+            } else {
+                chatbot.classList.remove('open');
+            }
+        }
+        
+        function sendMessage() {
+            const input = document.getElementById('chatbot-input');
+            const message = input.value.trim();
+            
+            if (message === '') return;
+            
+            // Add user message
+            addMessage(message, 'user');
+            input.value = '';
+            
+            // Simulate AI response (in a real implementation, this would call an API)
+            setTimeout(() => {
+                let response;
+                
+                if (message.toLowerCase().includes('pricing') || message.toLowerCase().includes('cost')) {
+                    response = "We offer three plans: Free (R0), Premium (R199/month), and Enterprise (R999/month). Which one are you interested in?";
+                } else if (message.toLowerCase().includes('list') || message.toLowerCase().includes('add')) {
+                    response = "To list your business, click on the 'Add Your Business' button in the navigation menu. I can guide you through the process!";
+                } else if (message.toLowerCase().includes('area') || message.toLowerCase().includes('region')) {
+                    response = "We cover all areas of the Western Cape: West Coast, Winelands, Cape Metro, Overberg, Garden Route, and Karoo. Which area are you interested in?";
+                } else if (message.toLowerCase().includes('help') || message.toLowerCase().includes('support')) {
+                    response = "Our support team is available 24/7. You can also email us at support@capebiz.co.za or call 072 142 3215. How can I help you?";
+                } else {
+                    response = "I'm here to help with any questions about our business directory. You can ask me about pricing, listing your business, or finding businesses in specific areas.";
+                }
+                
+                addMessage(response, 'bot');
+            }, 1000);
+        }
+        
+        function addMessage(text, sender) {
+            const messagesContainer = document.getElementById('chatbot-messages');
+            const messageElement = document.createElement('div');
+            messageElement.classList.add('message', sender);
+            messageElement.textContent = text;
+            
+            messagesContainer.appendChild(messageElement);
+            messagesContainer.scrollTop = messagesContainer.scrollHeight;
+        }
+        
+        // Allow sending message with Enter key
+        document.getElementById('chatbot-input').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                sendMessage();
+            }
+        });
+        
+        // Initialize the chatbot
+        document.addEventListener('DOMContentLoaded', function() {
+            // Simulate AI activity
+            console.log("AI Agents initialized...");
+            console.log("Marketing AI: Posting to social media platforms");
+            console.log("Security AI: Monitoring for threats");
+            console.log("Payment AI: Processing transactions");
+            console.log("Support AI: Handling customer queries");
+            
+            // Simulate AI learning
+            setInterval(function() {
+                console.log("AI System: Learning from new data and optimizing...");
+            }, 30000);
+        });
+        
+        // Payment integration with PayFast
+        function initiatePayment(plan) {
+            // In a real implementation, this would redirect to PayFast
+            console.log(`Initiating payment for ${plan} plan`);
+            
+            // Simulate payment processing
+            alert(`You are being redirected to PayFast to complete your ${plan} plan payment.`);
+            
+            // This would be the actual PayFast integration code:
+            /*
+            const paymentData = {
+                merchant_id: 'YOUR_MERCHANT_ID',
+                merchant_key: 'YOUR_MERCHANT_KEY',
+                return_url: `${window.location.origin}/payment-success`,
+                cancel_url: `${window.location.origin}/payment-cancel`,
+                notify_url: `${window.location.origin}/payfast-notify`,
+                name_first: 'Customer',
+                email_address: 'customer@example.com',
+                m_payment_id: 'unique_payment_id',
+                amount: '199.00',
+                item_name: `Business Directory - ${plan} Plan`,
+                custom_str1: 'additional_data'
+            };
+            
+            // Submit form to PayFast
+            const form = document.createElement('form');
+            form.method = 'POST';
+            form.action = 'https://www.payfast.co.za/eng/process';
+            
+            for (const key in paymentData) {
+                if (paymentData.hasOwnProperty(key)) {
+                    const hiddenField = document.createElement('input');
+                    hiddenField.type = 'hidden';
+                    hiddenField.name = key;
+                    hiddenField.value = paymentData[key];
+                    form.appendChild(hiddenField);
+                }
+            }
+            
+            document.body.appendChild(form);
+            form.submit();
+            */
+        }
+    </script>
+</body>
+</html>
