@@ -1,0 +1,1982 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CapeBiz Directory - Western Cape Business Directory</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #1a73e8;
+            --secondary: #0d47a1;
+            --accent: #ff6d00;
+            --light: #f5f7fa;
+            --dark: #1e293b;
+            --success: #10b981;
+            --gradient: linear-gradient(135deg, var(--primary), var(--secondary));
+        }
+        
+        body {
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            color: #334155;
+            background-color: #f8fafc;
+            line-height: 1.6;
+        }
+        
+        .navbar {
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            background: white !important;
+        }
+        
+        .hero-section {
+            background: var(--gradient), url('https://images.unsplash.com/photo-1580060839134-75a5edca2e99?ixlib=rb-4.0.3&auto=format&fit=crop&w=2071&q=80') center/cover;
+            color: white;
+            padding: 100px 0;
+            border-radius: 0 0 20px 20px;
+        }
+        
+        .card {
+            border: none;
+            border-radius: 12px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+            transition: transform 0.3s, box-shadow 0.3s;
+            overflow: hidden;
+        }
+        
+        .card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+        }
+        
+        .btn-primary {
+            background: var(--gradient);
+            border: none;
+            padding: 12px 28px;
+            border-radius: 50px;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(26, 115, 232, 0.3);
+        }
+        
+        .section-title {
+            position: relative;
+            margin-bottom: 40px;
+            font-weight: 700;
+            color: var(--dark);
+        }
+        
+        .section-title:after {
+            content: '';
+            position: absolute;
+            bottom: -15px;
+            left: 0;
+            width: 60px;
+            height: 4px;
+            background: var(--gradient);
+            border-radius: 2px;
+        }
+        
+        .section-title.center:after {
+            left: 50%;
+            transform: translateX(-50%);
+        }
+        
+        .ai-badge {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: var(--gradient);
+            color: white;
+            padding: 6px 12px;
+            border-radius: 50px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+        
+        .stats-box {
+            background: white;
+            border-radius: 12px;
+            padding: 25px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+            text-align: center;
+            height: 100%;
+        }
+        
+        .stats-box i {
+            font-size: 2.5rem;
+            color: var(--primary);
+            margin-bottom: 15px;
+        }
+        
+        .ai-agent-card {
+            background: white;
+            border-radius: 16px;
+            padding: 25px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+            height: 100%;
+            text-align: center;
+            transition: all 0.3s;
+        }
+        
+        .ai-agent-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+        }
+        
+        .ai-agent-card i {
+            font-size: 2.5rem;
+            color: var(--primary);
+            margin-bottom: 15px;
+        }
+        
+        .security-badge {
+            display: inline-block;
+            background: linear-gradient(135deg, #10b981, #059669);
+            color: white;
+            padding: 6px 15px;
+            border-radius: 50px;
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 15px;
+        }
+        
+        footer {
+            background: var(--dark);
+            color: white;
+            padding: 60px 0 30px;
+        }
+        
+        .social-icon {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.1);
+            color: white;
+            margin-right: 10px;
+            transition: all 0.3s;
+        }
+        
+        .social-icon:hover {
+            background: var(--primary);
+            transform: translateY(-3px);
+        }
+        
+        /* Shopping Cart */
+        .cart-icon {
+            position: relative;
+        }
+        
+        .cart-badge {
+            position: absolute;
+            top: -5px;
+            right: -5px;
+            background: var(--accent);
+            color: white;
+            border-radius: 50%;
+            width: 18px;
+            height: 18px;
+            font-size: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .cart-modal .list-group-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .cart-total {
+            font-weight: bold;
+            font-size: 1.2rem;
+        }
+        
+        .remove-from-cart {
+            color: #dc3545;
+            cursor: pointer;
+        }
+        
+        .remove-from-cart:hover {
+            color: #bd2130;
+        }
+        
+        /* Business Listing Cards */
+        .business-card {
+            transition: all 0.3s;
+        }
+        
+        .business-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .business-img {
+            height: 200px;
+            object-fit: cover;
+        }
+        
+        /* Compact Chatbot */
+        .chatbot-icon {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: var(--gradient);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            z-index: 1000;
+            transition: all 0.3s;
+        }
+        
+        .chatbot-icon:hover {
+            transform: scale(1.1);
+        }
+        
+        .chatbot-container {
+            position: fixed;
+            bottom: 90px;
+            right: 20px;
+            width: 350px;
+            height: 450px;
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+            z-index: 1000;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            transform: translateY(calc(100% + 70px));
+            transition: transform 0.3s;
+        }
+        
+        .chatbot-container.open {
+            transform: translateY(0);
+        }
+        
+        .chatbot-header {
+            background: var(--gradient);
+            color: white;
+            padding: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        
+        .chatbot-messages {
+            flex: 1;
+            padding: 15px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        
+        .message {
+            max-width: 80%;
+            padding: 10px 15px;
+            border-radius: 18px;
+        }
+        
+        .message.bot {
+            background: #f1f5f9;
+            align-self: flex-start;
+            border-bottom-left-radius: 5px;
+        }
+        
+        .message.user {
+            background: var(--primary);
+            color: white;
+            align-self: flex-end;
+            border-bottom-right-radius: 5px;
+        }
+        
+        .chatbot-input {
+            padding: 15px;
+            border-top: 1px solid #e2e8f0;
+            display: flex;
+            gap: 10px;
+        }
+        
+        .chatbot-input input {
+            flex: 1;
+            border: 1px solid #e2e8f0;
+            border-radius: 20px;
+            padding: 10px 15px;
+            outline: none;
+        }
+        
+        /* AI Performance Dashboard */
+        .ai-performance {
+            background: var(--dark);
+            color: white;
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 30px;
+        }
+        
+        .progress {
+            height: 10px;
+            margin-bottom: 15px;
+        }
+        
+        /* Listings Page */
+        #listings-page {
+            display: none;
+            padding: 100px 0 50px;
+        }
+        
+        .filter-section {
+            background: white;
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            margin-bottom: 30px;
+        }
+        
+        /* Business Details Page */
+        #business-details-page {
+            display: none;
+            padding: 100px 0 50px;
+        }
+        
+        .business-hero {
+            background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('https://images.unsplash.com/photo-1560518883-ce09059eeffa?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2073&q=80') center/cover;
+            color: white;
+            padding: 60px 0;
+            border-radius: 12px;
+            margin-bottom: 30px;
+        }
+        
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .hero-section {
+                padding: 60px 0;
+                text-align: center;
+            }
+            
+            .section-title:after {
+                left: 50%;
+                transform: translateX(-50%);
+            }
+            
+            .chatbot-container {
+                width: 300px;
+                right: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-light sticky-top">
+        <div class="container">
+            <a class="navbar-brand" href="#" onclick="showPage('home-page')">
+                <img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAiIGhlaWdodD0iNDAiIHZpZXdCb3g9IjAgMCA0MCA0MCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHJlY3Qgd2lkdGg9IjQwIiBoZWlnaHQ9IjQwIiByeD0iOCIgZmlsbD0iIzFhNzNlOCIvPgo8cGF0aCBkPSJNMTAgMTVIMzBWMTlIMTBWMTVaIiBmaWxsPSJ3aGl0ZSIvPgo8cGF0aCBkPSJNMTAgMjJIMzBWMjZIMTBWMjJaIiBmaWxsPSJ3aGl0ZSIvPgo8cGF0aCBdPSJNMTAgMjlIMzBWMzNIMTBWMjlaIiBmaWxsPSJ3aGl0ZSIvPgo8L3N2Zz4K" alt="Logo" class="me-2" width="40" height="40">
+                <span class="fw-bold text-primary">CapeBiz Directory</span>
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="#" onclick="showPage('home-page')">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#" onclick="showPage('listings-page')">Businesses</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#areas">Areas</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#pricing">Pricing</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#ai-team">AI Team</a>
+                    </li>
+                </ul>
+                <div class="d-flex align-items-center">
+                    <a href="#" class="btn btn-outline-primary me-2" data-bs-toggle="modal" data-bs-target="#loginModal">Login</a>
+                    <a href="#" class="btn btn-primary me-2" data-bs-toggle="modal" data-bs-target="#registerModal">Register</a>
+                    <a href="#" class="cart-icon position-relative me-2" data-bs-toggle="modal" data-bs-target="#cartModal">
+                        <i class="fas fa-shopping-cart fa-lg"></i>
+                        <span class="cart-badge">0</span>
+                    </a>
+                    <a href="#" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#addBusinessModal">Add Your Business</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Home Page -->
+    <div id="home-page">
+        <!-- Hero Section -->
+        <section class="hero-section">
+            <div class="container">
+                <div class="row align-items-center">
+                    <div class="col-lg-7">
+                        <h1 class="display-4 fw-bold mb-4">Western Cape's Premier Business Directory</h1>
+                        <p class="lead mb-4">AI-powered platform connecting businesses with customers across the Western Cape</p>
+                        <div class="d-flex flex-wrap gap-2">
+                            <a href="#" class="btn btn-light btn-lg" onclick="showPage('listings-page')">Explore Businesses</a>
+                            <a href="#" class="btn btn-outline-light btn-lg" data-bs-toggle="modal" data-bs-target="#addBusinessModal">List Your Business</a>
+                        </div>
+                    </div>
+                    <div class="col-lg-5 d-none d-lg-block">
+                        <div class="card overflow-hidden">
+                            <div class="ai-badge">AI Powered</div>
+                            <div class="card-body p-4">
+                                <h5 class="card-title">AI Business Assistant</h5>
+                                <p class="card-text">Hi! I'm your AI assistant. I can help you find the perfect business or list your own in seconds!</p>
+                                <div class="input-group mb-3">
+                                    <input type="text" class="form-control" placeholder="Ask me anything...">
+                                    <button class="btn btn-primary">Ask</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Stats Section -->
+        <section class="py-5">
+            <div class="container">
+                <div class="row g-4">
+                    <div class="col-md-3 col-6">
+                        <div class="stats-box">
+                            <i class="fas fa-building"></i>
+                            <h3 class="fw-bold">2,458</h3>
+                            <p class="text-muted">Businesses Listed</p>
+                        </div>
+                    </div>
+                    <div class="col-md-3 col-6">
+                        <div class="stats-box">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <h3 class="fw-bold">48</h3>
+                            <p class="text-muted">Towns & Areas</p>
+                        </div>
+                    </div>
+                    <div class="col-md-3 col-6">
+                        <div class="stats-box">
+                            <i class="fas fa-users"></i>
+                            <h3 class="fw-bold">15,892</h3>
+                            <p class="text-muted">Active Users</p>
+                        </div>
+                    </div>
+                    <div class="col-md-3 col-6">
+                        <div class="stats-box">
+                            <i class="fas fa-search"></i>
+                            <h3 class="fw-bold">42,356</h3>
+                            <p class="text-muted">Monthly Searches</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- AI Performance Dashboard -->
+        <section class="py-5 bg-light">
+            <div class="container">
+                <h2 class="section-title center">AI Performance Dashboard</h2>
+                <p class="text-center text-muted mb-5">Our AI team's first month performance metrics</p>
+                
+                <div class="ai-performance">
+                    <h4 class="text-center mb-4">First Month Subscriber Goals</h4>
+                    <div class="row">
+                        <div class="col-md-3 mb-4">
+                            <h5>Premium Subscribers</h5>
+                            <p>100 x R199/month</p>
+                            <div class="progress">
+                                <div class="progress-bar bg-success" role="progressbar" style="width: 85%" aria-valuenow="85" aria-valuemin="0" aria-valuemax="100"></div>
+                            </div>
+                            <p>85/100 (85%)</p>
+                        </div>
+                        <div class="col-md-3 mb-4">
+                            <h5>Enterprise Subscribers</h5>
+                            <p>20 x R999/month</p>
+                            <div class="progress">
+                                <div class="progress-bar bg-info" role="progressbar" style="width: 75%" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
+                            </div>
+                            <p>15/20 (75%)</p>
+                        </div>
+                        <div class="col-md-3 mb-4">
+                            <h5>Free Subscribers</h5>
+                            <p>300 listings</p>
+                            <div class="progress">
+                                <div class="progress-bar bg-warning" role="progressbar" style="width: 90%" aria-valuenow="90" aria-valuemin="0" aria-valuemax="100"></div>
+                            </div>
+                            <p>270/300 (90%)</p>
+                        </div>
+                        <div class="col-md-3 mb-4">
+                            <h5>Boost Purchases</h5>
+                            <p>50 x R99 boosts</p>
+                            <div class="progress">
+                                <div class="progress-bar bg-danger" role="progressbar" style="width: 80%" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100"></div>
+                            </div>
+                            <p>40/50 (80%)</p>
+                        </div>
+                    </div>
+                    <div class="text-center mt-4">
+                        <p class="mb-1">Total Projected Revenue: <strong>R42,755</strong></p>
+                        <p class="mb-0">Owner Payout (60%): <strong>R25,653</strong> | AI Fund (40%): <strong>R17,102</strong></p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- AI Agents Section -->
+        <section class="py-5" id="ai-team">
+            <div class="container">
+                <h2 class="section-title center">Our AI Team</h2>
+                <p class="text-center text-muted mb-5">Meet the synthetic intelligence team that runs our platform 24/7</p>
+                
+                <div class="row g-4">
+                    <div class="col-md-3 col-6">
+                        <div class="ai-agent-card">
+                            <i class="fas fa-bullhorn fa-3x text-primary mb-3"></i>
+                            <h5>Marketing AI</h5>
+                            <p class="text-muted">Promotes businesses across social media platforms</p>
+                            <div class="security-badge">Active</div>
+                        </div>
+                    </div>
+                    <div class="col-md-3 col-6">
+                        <div class="ai-agent-card">
+                            <i class="fas fa-shield-alt fa-3x text-primary mb-3"></i>
+                            <h5>Security AI</h5>
+                            <p class="text-muted">Military-grade protection against threats</p>
+                            <div class="security-badge">Active</div>
+                        </div>
+                    </div>
+                    <div class="col-md-3 col-6">
+                        <div class="ai-agent-card">
+                            <i class="fas fa-credit-card fa-3x text-primary mb-3"></i>
+                            <h5>Payment AI</h5>
+                            <p class="text-muted">Handles transactions and revenue distribution</p>
+                            <div class="security-badge">Active</div>
+                        </div>
+                    </div>
+                    <div class="col-md-3 col-6">
+                        <div class="ai-agent-card">
+                            <i class="fas fa-headset fa-3x text-primary mb-3"></i>
+                            <h5>Support AI</h5>
+                            <p class="text-muted">Provides 24/7 customer support</p>
+                            <div class="security-badge">Active</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Areas Section -->
+        <section class="py-5 bg-light" id="areas">
+            <div class="container">
+                <h2 class="section-title">Explore by Area</h2>
+                <p class="text-muted mb-4">Browse businesses across the Western Cape's diverse regions</p>
+                
+                <div class="row g-4">
+                    <div class="col-md-4">
+                        <div class="card">
+                            <img src="https://images.unsplash.com/photo-1578645510447-e4b6cbf56a89?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80" class="card-img-top" alt="West Coast">
+                            <div class="card-body">
+                                <h5 class="card-title">West Coast</h5>
+                                <p class="card-text">Langebaan, Saldanha, Velddrif, Yzerfontein and more</p>
+                                <a href="#" class="btn btn-sm btn-outline-primary" onclick="showPage('listings-page'); filterListings('West Coast')">Explore 342 businesses</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="card">
+                            <img src="https://images.unsplash.com/photo-1593537612373-cc8e584186b9?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80" class="card-img-top" alt="Winelands">
+                            <div class="card-body">
+                                <h5 class="card-title">Winelands</h5>
+                                <p class="card-text">Stellenbosch, Franschhoek, Paarl, Wellington and more</p>
+                                <a href="#" class="btn btn-sm btn-outline-primary" onclick="showPage('listings-page'); filterListings('Winelands')">Explore 587 businesses</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="card">
+                            <img src="https://images.unsplash.com/photo-1580060839134-75a5edca2e99?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2071&q=80" class="card-img-top" alt="Cape Metro">
+                            <div class="card-body">
+                                <h5 class="card-title">Cape Metro</h5>
+                                <p class="card-text">Cape Town CBD, Southern Suburbs, Northern Suburbs and more</p>
+                                <a href="#" class="btn btn-sm btn-outline-primary" onclick="showPage('listings-page'); filterListings('Cape Metro')">Explore 1,204 businesses</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="text-center mt-4">
+                    <a href="#" class="btn btn-outline-primary" onclick="showPage('listings-page')">View All Areas</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Business Listings Section -->
+        <section class="py-5" id="listings">
+            <div class="container">
+                <h2 class="section-title center">Featured Businesses</h2>
+                <p class="text-center text-muted mb-5">Discover some of our top-rated businesses in the Western Cape</p>
+                
+                <div class="row g-4" id="businessListings">
+                    <!-- Business listings will be loaded here dynamically -->
+                    <div class="col-12 text-center">
+                        <div class="spinner-border text-primary" role="status">
+                            <span class="visually-hidden">Loading...</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="text-center mt-4">
+                    <a href="#" class="btn btn-primary" onclick="showPage('listings-page')">View All Businesses</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Pricing Section -->
+        <section class="py-5 bg-light" id="pricing">
+            <div class="container">
+                <h2 class="section-title center">Transparent Pricing</h2>
+                <p class="text-center text-muted mb-5">Choose the perfect plan for your business with our AI-recommended options</p>
+                
+                <div class="row g-4">
+                    <div class="col-md-4">
+                        <div class="pricing-card text-center h-100">
+                            <div class="card-body p-5">
+                                <h5 class="card-title">Free Listing</h5>
+                                <h2 class="my-4">R0</h2>
+                                <ul class="list-unstyled mb-4">
+                                    <li class="mb-2">Basic business information</li>
+                                    <li class="mb-2">1 photo</li>
+                                    <li class="mb-2">Appears in search results</li>
+                                    <li class="mb-2 text-muted"><s>Priority placement</s></li>
+                                    <li class="mb-2 text-muted"><s>Video content</s></li>
+                                </ul>
+                                <button class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#addBusinessModal" data-tier="free">Get Started</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="pricing-card featured text-center h-100">
+                            <div class="card-body p-5">
+                                <span class="badge bg-primary mb-3">MOST POPULAR</span>
+                                <h5 class="card-title">Premium</h5>
+                                <h2 class="my-4">R199<span class="h6">/month</span></h2>
+                                <ul class="list-unstyled mb-4">
+                                    <li class="mb-2">10+ photos</li>
+                                    <li class="mb-2">1 video showcase</li>
+                                    <li class="mb-2">Priority placement</li>
+                                    <li class="mb-2">Advanced analytics</li>
+                                    <li class="mb-2">AI-powered recommendations</li>
+                                </ul>
+                                <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addBusinessModal" data-tier="premium">Get Started</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="pricing-card text-center h-100">
+                            <div class="card-body p-5">
+                                <h5 class="card-title">Enterprise</h5>
+                                <h2 class="my-4">R999<span class="h6">/month</span></h2>
+                                <ul class="list-unstyled mb-4">
+                                    <li class="mb-2">Unlimited media</li>
+                                    <li class="mb-2">360° virtual tours</li>
+                                    <li class="mb-2">Top placement in search</li>
+                                    <li class="mb-2">Dedicated AI support</li>
+                                    <li class="mb-2">Marketing campaigns</li>
+                                </ul>
+                                <button class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#addBusinessModal" data-tier="enterprise">Contact Sales</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="text-center mt-5">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">Boost Your Listing</h5>
+                            <p class="card-text">Get your business featured at the top of search results</p>
+                            <h3 class="text-primary">R99 for 3 days</h3>
+                            <p class="text-muted">Premium subscribers get boosts for R99 (normally R150)</p>
+                            <button class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#boostModal">Learn More</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Security Section -->
+        <section class="py-5" id="security">
+            <div class="container">
+                <div class="row align-items-center">
+                    <div class="col-lg-6">
+                        <h2 class="section-title">Military-Grade Security</h2>
+                        <p class="mb-4">Our AI-powered security system protects your business and customer data with advanced encryption and threat detection.</p>
+                        
+                        <div class="d-flex mb-3">
+                            <div class="me-4">
+                                <i class="fas fa-shield-alt fa-2x text-primary mb-2"></i>
+                                <h5>Advanced Protection</h5>
+                                <p class="text-muted">Real-time threat detection and prevention</p>
+                            </div>
+                            <div>
+                                <i class="fas fa-lock fa-2x text-primary mb-2"></i>
+                                <h5>Data Encryption</h5>
+                                <p class="text-muted">All data encrypted in transit and at rest</p>
+                            </div>
+                        </div>
+                        
+                        <div class="d-flex">
+                            <div class="me-4">
+                                <i class="fas fa-sync-alt fa-2x text-primary mb-2"></i>
+                                <h5>AI Monitoring</h5>
+                                <p class="text-muted">Continuous learning and adaptation to new threats</p>
+                            </div>
+                            <div>
+                                <i class="fas fa-user-shield fa-2x text-primary mb-2"></i>
+                                <h5>Anti-Fraud</h5>
+                                <p class="text-muted">Advanced algorithms detect and prevent fraud</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="card">
+                            <div class="card-body p-4 text-center">
+                                <i class="fas fa-lock fa-4x text-primary mb-3"></i>
+                                <h4>Secure Payment Processing</h4>
+                                <p class="text-muted">All transactions are processed securely with bank-level encryption</p>
+                                <div class="row mt-4">
+                                    <div class="col-6">
+                                        <i class="fab fa-cc-visa fa-2x mb-2"></i>
+                                        <p>Visa</p>
+                                    </div>
+                                    <div class="col-6">
+                                        <i class="fab fa-cc-mastercard fa-2x mb-2"></i>
+                                        <p>Mastercard</p>
+                                    </div>
+                                    <div class="col-6">
+                                        <i class="fab fa-cc-amex fa-2x mb-2"></i>
+                                        <p>American Express</p>
+                                    </div>
+                                    <div class="col-6">
+                                        <img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTAwIiBoZWlnaHQ9IjQwIiB2aWV3Qm94PSIwIDAgMTAwIDQwIiBmaWxsPSJub25lIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgo8cmVjdCB3aWR0aD0iMTAwIiBoZWlnaHQ9IjQwIiByeD0iNCIgZmlsbD0iIzAwN0JGNSIvPgo8cGF0aCBkPSJNNDAgMTJIMzVWMTdINDBWMjBIMjVWMTJIMjBWMjBIMTVWMTJIMTBWMjBINVYxMkgwVjI4SDQwVjEyWiIgZmlsbD0id2hpdGUiLz4KPHBhdGggZD0iTTYwIDEySDU1VjE3SDYwVjIwSDU1VjI4SDY1VjI0SDcwVjI4SDgwVjIwSDc1VjE3SDgwVjEySDc1VjE3SDcwVjEySDY1VjE3SDYwVjEyWiIgZmlsbD0id2hpdGUiLz4KPHBhdGggZD0iTTkwIDI4VjEyaC01djE2aDVaIiBmaWxsPSJ3aGl0ZSIvPgo8L3N2Zz4K" alt="PayFast" width="40" height="25" class="mb-2">
+                                        <p>PayFast</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- CTA Section -->
+        <section class="py-5 bg-primary text-white">
+            <div class="container text-center">
+                <h2 class="mb-4">Ready to Grow Your Business?</h2>
+                <p class="lead mb-4">Join hundreds of Western Cape businesses already benefiting from our AI-powered platform</p>
+                <button class="btn btn-light btn-lg mx-2" data-bs-toggle="modal" data-bs-target="#addBusinessModal">List Your Business</button>
+                <a href="#pricing" class="btn btn-outline-light btn-lg mx-2">View Pricing</a>
+            </div>
+        </section>
+    </div>
+
+    <!-- Listings Page -->
+    <div id="listings-page">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <nav aria-label="breadcrumb" class="mt-4">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item"><a href="#" onclick="showPage('home-page')">Home</a></li>
+                            <li class="breadcrumb-item active" aria-current="page">Business Listings</li>
+                        </ol>
+                    </nav>
+                    <h1 class="my-4">Business Listings</h1>
+                </div>
+            </div>
+            
+            <div class="row">
+                <div class="col-md-3">
+                    <div class="filter-section">
+                        <h5>Filter By</h5>
+                        <div class="mb-3">
+                            <label class="form-label">Category</label>
+                            <select class="form-select" id="categoryFilter">
+                                <option value="">All Categories</option>
+                                <option value="Estate Agents">Estate Agents</option>
+                                <option value="Plumbers">Plumbers</option>
+                                <option value="Electricians">Electricians</option>
+                                <option value="Auto Repairs">Auto Repairs</option>
+                                <option value="Builders">Builders</option>
+                                <option value="Restaurants">Restaurants</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Area</label>
+                            <select class="form-select" id="areaFilter">
+                                <option value="">All Areas</option>
+                                <option value="West Coast">West Coast</option>
+                                <option value="Winelands">Winelands</option>
+                                <option value="Cape Metro">Cape Metro</option>
+                                <option value="Overberg">Overberg</option>
+                                <option value="Garden Route">Garden Route</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Town</label>
+                            <select class="form-select" id="townFilter">
+                                <option value="">All Towns</option>
+                                <option value="Langebaan">Langebaan</option>
+                                <option value="Saldanha">Saldanha</option>
+                                <option value="Stellenbosch">Stellenbosch</option>
+                                <option value="Franschhoek">Franschhoek</option>
+                                <option value="Cape Town CBD">Cape Town CBD</option>
+                            </select>
+                        </div>
+                        <button class="btn btn-primary w-100" onclick="applyFilters()">Apply Filters</button>
+                    </div>
+                </div>
+                
+                <div class="col-md-9">
+                    <div class="d-flex justify-content-between align-items-center mb-4">
+                        <h4 id="filterResultsText">All Businesses</h4>
+                        <div class="btn-group">
+                            <button class="btn btn-outline-primary active">Popular</button>
+                            <button class="btn btn-outline-primary">Newest</button>
+                            <button class="btn btn-outline-primary">A-Z</button>
+                        </div>
+                    </div>
+                    
+                    <div class="row g-4" id="listingsResults">
+                        <!-- Listings will be loaded here -->
+                    </div>
+                    
+                    <nav aria-label="Page navigation" class="mt-5">
+                        <ul class="pagination justify-content-center">
+                            <li class="page-item disabled">
+                                <a class="page-link" href="#" tabindex="-1">Previous</a>
+                            </li>
+                            <li class="page-item active"><a class="page-link" href="#">1</a></li>
+                            <li class="page-item"><a class="page-link" href="#">2</a></li>
+                            <li class="page-item"><a class="page-link" href="#">3</a></li>
+                            <li class="page-item">
+                                <a class="page-link" href="#">Next</a>
+                            </li>
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Business Details Page -->
+    <div id="business-details-page">
+        <div class="container">
+            <nav aria-label="breadcrumb" class="mt-4">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="#" onclick="showPage('home-page')">Home</a></li>
+                    <li class="breadcrumb-item"><a href="#" onclick="showPage('listings-page')">Businesses</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">Business Details</li>
+                </ol>
+            </nav>
+            
+            <div class="business-hero">
+                <div class="container">
+                    <div class="row align-items-center">
+                        <div class="col-md-8">
+                            <h1 id="businessName">Business Name</h1>
+                            <p class="lead" id="businessCategory">Category</p>
+                            <p id="businessLocation"><i class="fas fa-map-marker-alt"></i> Location</p>
+                        </div>
+                        <div class="col-md-4 text-md-end">
+                            <button class="btn btn-primary btn-lg me-2" onclick="addToCart(currentBusinessId, 'boost')">
+                                <i class="fas fa-bolt"></i> Boost Listing R99
+                            </button>
+                            <button class="btn btn-outline-light btn-lg">
+                                <i class="fas fa-phone"></i> Contact
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="row">
+                <div class="col-md-8">
+                    <div class="card mb-4">
+                        <div class="card-body">
+                            <h4>About This Business</h4>
+                            <p id="businessDescription">Description will be loaded here</p>
+                            
+                            <h5 class="mt-4">Services</h5>
+                            <ul id="businessServices">
+                                <li>Service 1</li>
+                                <li>Service 2</li>
+                                <li>Service 3</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div class="card mb-4">
+                        <div class="card-body">
+                            <h4>Gallery</h4>
+                            <div class="row" id="businessGallery">
+                                <!-- Images will be loaded here -->
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="card mb-4">
+                        <div class="card-body">
+                            <h4>Reviews</h4>
+                            <div class="d-flex align-items-center mb-4">
+                                <div class="me-3">
+                                    <h2 class="mb-0">4.8</h2>
+                                    <div class="text-warning">
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star-half-alt"></i>
+                                    </div>
+                                    <p class="text-muted mb-0">Based on 24 reviews</p>
+                                </div>
+                                <div class="flex-grow-1">
+                                    <div class="d-flex align-items-center mb-1">
+                                        <span class="me-2">5</span>
+                                        <i class="fas fa-star text-warning"></i>
+                                        <div class="progress flex-grow-1 mx-2">
+                                            <div class="progress-bar bg-warning" style="width: 80%"></div>
+                                        </div>
+                                        <span>19</span>
+                                    </div>
+                                    <div class="d-flex align-items-center mb-1">
+                                        <span class="me-2">4</span>
+                                        <i class="fas fa-star text-warning"></i>
+                                        <div class="progress flex-grow-1 mx-2">
+                                            <div class="progress-bar bg-warning" style="width: 15%"></div>
+                                        </div>
+                                        <span>4</span>
+                                    </div>
+                                    <div class="d-flex align-items-center mb-1">
+                                        <span class="me-2">3</span>
+                                        <i class="fas fa-star text-warning"></i>
+                                        <div class="progress flex-grow-1 mx-2">
+                                            <div class="progress-bar bg-warning" style="width: 5%"></div>
+                                        </div>
+                                        <span>1</span>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div id="businessReviews">
+                                <!-- Reviews will be loaded here -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-md-4">
+                    <div class="card mb-4">
+                        <div class="card-body">
+                            <h5>Contact Information</h5>
+                            <p id="businessContactPhone"><i class="fas fa-phone"></i> Phone: Loading...</p>
+                            <p id="businessContactEmail"><i class="fas fa-envelope"></i> Email: Loading...</p>
+                            <p id="businessContactWebsite"><i class="fas fa-globe"></i> Website: Loading...</p>
+                            <p id="businessContactAddress"><i class="fas fa-map-marker-alt"></i> Address: Loading...</p>
+                            
+                            <div class="mt-4">
+                                <button class="btn btn-outline-primary w-100 mb-2">
+                                    <i class="fas fa-directions"></i> Get Directions
+                                </button>
+                                <button class="btn btn-outline-primary w-100">
+                                    <i class="fas fa-share-alt"></i> Share Business
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="card mb-4">
+                        <div class="card-body">
+                            <h5>Business Hours</h5>
+                            <table class="table">
+                                <tr>
+                                    <td>Monday - Friday</td>
+                                    <td>8:00 AM - 5:00 PM</td>
+                                </tr>
+                                <tr>
+                                    <td>Saturday</td>
+                                    <td>9:00 AM - 1:00 PM</td>
+                                </tr>
+                                <tr>
+                                    <td>Sunday</td>
+                                    <td>Closed</td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                    
+                    <div class="card">
+                        <div class="card-body">
+                            <h5>Boost This Business</h5>
+                            <p>Get more visibility for this business with our boost feature</p>
+                            <div class="text-center">
+                                <button class="btn btn-primary" onclick="addToCart(currentBusinessId, 'boost')">
+                                    <i class="fas fa-bolt"></i> Boost for R99
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-4 mb-4">
+                    <h5 class="text-white mb-4">CapeBiz Directory</h5>
+                    <p>The Western Cape's premier AI-powered business directory, connecting businesses with customers since 2023.</p>
+                    <div class="mt-4">
+                        <a href="#" class="social-icon"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" class="social-icon"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="social-icon"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="social-icon"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="#" class="social-icon"><i class="fab fa-tiktok"></i></a>
+                    </div>
+                </div>
+                <div class="col-lg-2 col-md-4 mb-4">
+                    <h5 class="text-white mb-4">Quick Links</h5>
+                    <ul class="list-unstyled">
+                        <li class="mb-2"><a href="#" class="text-light text-decoration-none" onclick="showPage('home-page')">Home</a></li>
+                        <li class="mb-2"><a href="#" class="text-light text-decoration-none" onclick="showPage('listings-page')">Businesses</a></li>
+                        <li class="mb-2"><a href="#areas" class="text-light text-decoration-none">Areas</a></li>
+                        <li class="mb-2"><a href="#pricing" class="text-light text-decoration-none">Pricing</a></li>
+                        <li class="mb-2"><a href="#ai-team" class="text-light text-decoration-none">AI Team</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-2 col-md-4 mb-4">
+                    <h5 class="text-white mb-4">Areas</h5>
+                    <ul class="list-unstyled">
+                        <li class="mb-2"><a href="#" class="text-light text-decoration-none" onclick="showPage('listings-page'); filterListings('West Coast')">West Coast</a></li>
+                        <li class="mb-2"><a href="#" class="text-light text-decoration-none" onclick="showPage('listings-page'); filterListings('Winelands')">Winelands</a></li>
+                        <li class="mb-2"><a href="#" class="text-light text-decoration-none" onclick="showPage('listings-page'); filterListings('Cape Metro')">Cape Metro</a></li>
+                        <li class="mb-2"><a href="#" class="text-light text-decoration-none" onclick="showPage('listings-page'); filterListings('Overberg')">Overberg</a></li>
+                        <li class="mb-2"><a href="#" class="text-light text-decoration-none" onclick="showPage('listings-page'); filterListings('Garden Route')">Garden Route</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-4 col-md-4 mb-4">
+                    <h5 class="text-white mb-4">Contact Us</h5>
+                    <ul class="list-unstyled">
+                        <li class="mb-2"><i class="fas fa-envelope me-2"></i> info@capebiz.co.za</li>
+                        <li class="mb-2"><i class="fas fa-phone me-2"></i> 072 142 3215</li>
+                        <li class="mb-2"><i class="fas fa-map-marker-alt me-2"></i> Cape Town, Western Cape</li>
+                    </ul>
+                    <div class="mt-4">
+                        <div class="security-badge">AI-Powered & Secure</div>
+                    </div>
+                </div>
+            </div>
+            <hr class="bg-light">
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <p class="mb-0">&copy; 2023 CapeBiz Directory. All rights reserved.</p>
+                </div>
+                <div class="col-md-6 text-md-end">
+                    <a href="#" class="text-light text-decoration-none me-3">Privacy Policy</a>
+                    <a href="#" class="text-light text-decoration-none me-3">Terms of Service</a>
+                    <a href="#" class="text-light text-decoration-none">Cookie Policy</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Login Modal -->
+    <div class="modal fade" id="loginModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Login to Your Account</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="loginForm">
+                        <div class="mb-3">
+                            <label for="loginEmail" class="form-label">Email address</label>
+                            <input type="email" class="form-control" id="loginEmail" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="loginPassword" class="form-label">Password</label>
+                            <input type="password" class="form-control" id="loginPassword" required>
+                        </div>
+                        <div class="mb-3 form-check">
+                            <input type="checkbox" class="form-check-input" id="rememberMe">
+                            <label class="form-check-label" for="rememberMe">Remember me</label>
+                        </div>
+                        <button type="submit" class="btn btn-primary w-100">Login</button>
+                    </form>
+                    <div class="text-center mt-3">
+                        <a href="#" data-bs-toggle="modal" data-bs-target="#forgotPasswordModal">Forgot your password?</a>
+                    </div>
+                    <hr>
+                    <div class="text-center">
+                        <p>Don't have an account? <a href="#" data-bs-toggle="modal" data-bs-target="#registerModal">Register here</a></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Register Modal -->
+    <div class="modal fade" id="registerModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Create an Account</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="registerForm">
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label for="registerFirstName" class="form-label">First Name</label>
+                                <input type="text" class="form-control" id="registerFirstName" required>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="registerLastName" class="form-label">Last Name</label>
+                                <input type="text" class="form-control" id="registerLastName" required>
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="registerEmail" class="form-label">Email address</label>
+                            <input type="email" class="form-control" id="registerEmail" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="registerPhone" class="form-label">Phone Number</label>
+                            <input type="tel" class="form-control" id="registerPhone" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="registerPassword" class="form-label">Password</label>
+                            <input type="password" class="form-control" id="registerPassword" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="registerConfirmPassword" class="form-label">Confirm Password</label>
+                            <input type="password" class="form-control" id="registerConfirmPassword" required>
+                        </div>
+                        <div class="mb-3 form-check">
+                            <input type="checkbox" class="form-check-input" id="termsAgreement" required>
+                            <label class="form-check-label" for="termsAgreement">I agree to the <a href="#">Terms of Service</a> and <a href="#">Privacy Policy</a></label>
+                        </div>
+                        <button type="submit" class="btn btn-primary w-100">Create Account</button>
+                    </form>
+                    <hr>
+                    <div class="text-center">
+                        <p>Already have an account? <a href="#" data-bs-toggle="modal" data-bs-target="#loginModal">Login here</a></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add Business Modal -->
+    <div class="modal fade" id="addBusinessModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Add Your Business</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="addBusinessForm">
+                        <div class="mb-3">
+                            <label for="businessName" class="form-label">Business Name *</label>
+                            <input type="text" class="form-control" id="businessName" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="businessCategory" class="form-label">Category *</label>
+                            <select class="form-control" id="businessCategory" required>
+                                <option value="">Select a category</option>
+                                <option value="Estate Agents">Estate Agents</option>
+                                <option value="Plumbers">Plumbers</option>
+                                <option value="Electricians">Electricians</option>
+                                <option value="Auto Repairs">Auto Repairs</option>
+                                <option value="Builders">Builders</option>
+                                <option value="Restaurants">Restaurants</option>
+                                <option value="Other">Other</option>
+                            </select>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label for="businessArea" class="form-label">Region *</label>
+                                <select class="form-control" id="businessArea" required>
+                                    <option value="">Select a region</option>
+                                    <option value="West Coast">West Coast</option>
+                                    <option value="Winelands">Winelands</option>
+                                    <option value="Overberg">Overberg</option>
+                                    <option value="Cape Metro">Cape Metro</option>
+                                    <option value="Garden Route">Garden Route</option>
+                                    <option value="Karoo">Karoo</option>
+                                </select>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="businessTown" class="form-label">Town/Area *</label>
+                                <input type="text" class="form-control" id="businessTown" required>
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="businessDescription" class="form-label">Description *</label>
+                            <textarea class="form-control" id="businessDescription" rows="3" required></textarea>
+                            <small class="form-text text-muted">Describe your business in 50-200 words</small>
+                        </div>
+                        <div class="mb-3">
+                            <label for="businessEmail" class="form-label">Email *</label>
+                            <input type="email" class="form-control" id="businessEmail" required>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label for="businessPhone" class="form-label">Phone *</label>
+                                <input type="tel" class="form-control" id="businessPhone" required>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="businessWebsite" class="form-label">Website</label>
+                                <input type="url" class="form-control" id="businessWebsite">
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="businessAddress" class="form-label">Address *</label>
+                            <textarea class="form-control" id="businessAddress" rows="2" required></textarea>
+                        </div>
+                        <div class="mb-3">
+                            <label for="businessPhoto" class="form-label">Business Photo</label>
+                            <input type="file" class="form-control" id="businessPhoto" accept="image/*">
+                            <small class="form-text text-muted">Free listings can have 1 photo (max 5MB). Premium listings can have up to 10 photos.</small>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Listing Plan *</label>
+                            <div class="form-check mb-2">
+                                <input class="form-check-input" type="radio" name="businessTier" id="tierFree" value="free" checked>
+                                <label class="form-check-label" for="tierFree">
+                                    Free Listing (R0) - 1 photo, basic listing
+                                </label>
+                            </div>
+                            <div class="form-check mb-2">
+                                <input class="form-check-input" type="radio" name="businessTier" id="tierPremium" value="premium">
+                                <label class="form-check-label" for="tierPremium">
+                                    Premium (R199/month) - 10 photos, 1 video, priority placement
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="businessTier" id="tierEnterprise" value="enterprise">
+                                <label class="form-check-label" for="tierEnterprise">
+                                    Enterprise (R999/month) - Unlimited media, top placement, marketing
+                                </label>
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="businessTerms" required>
+                                <label class="form-check-label" for="businessTerms">
+                                    I confirm that this business is legitimate and agree to the <a href="#">Terms of Service</a>
+                                </label>
+                            </div>
+                        </div>
+                        <button type="submit" class="btn btn-primary w-100">Add Business</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Shopping Cart Modal -->
+    <div class="modal fade" id="cartModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Your Shopping Cart</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div id="cartItems">
+                        <p class="text-center">Your cart is empty</p>
+                    </div>
+                    <div class="d-flex justify-content-between mt-3 cart-total">
+                        <span>Total:</span>
+                        <span id="cartTotal">R0.00</span>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Continue Shopping</button>
+                    <button type="button" class="btn btn-primary" id="checkoutButton">Proceed to Checkout</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Boost Modal -->
+    <div class="modal fade" id="boostModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Boost Your Listing</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <h4 class="text-primary">R99 for 3 days</h4>
+                    <p>Get your business featured at the top of search results for your area and category.</p>
+                    <ul>
+                        <li>Premium placement in search results</li>
+                        <li>Highlighted listing with special badge</li>
+                        <li>Increased visibility and clicks</li>
+                        <li>Perfect for promotions and special offers</li>
+                    </ul>
+                    <div class="text-center mt-4">
+                        <button class="btn btn-primary" onclick="addBoostToCart()">Add Boost to Cart</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- AI Assistant Widget -->
+    <div class="chatbot-icon" onclick="toggleChatbot()">
+        <i class="fas fa-robot fa-lg"></i>
+    </div>
+
+    <div class="chatbot-container" id="chatbot">
+        <div class="chatbot-header">
+            <div>
+                <h6 class="mb-0">AI Business Assistant</h6>
+                <small>Ready to help you 24/7</small>
+            </div>
+            <button class="btn btn-sm btn-light" onclick="toggleChatbot()">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+        <div class="chatbot-messages" id="chatbot-messages">
+            <div class="message bot">
+                Hi there! I'm your AI assistant. How can I help you today?
+            </div>
+            <div class="message bot">
+                I can help you find businesses, list your own, or answer any questions about our platform.
+            </div>
+        </div>
+        <div class="chatbot-input">
+            <input type="text" id="chatbot-input" placeholder="Type your message here..." onkeypress="handleChatInput(event)">
+            <button class="btn btn-primary btn-sm" onclick="sendMessage()">
+                <i class="fas fa-paper-plane"></i>
+            </button>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Business listings data (simulated database)
+        const businessListings = [
+            {
+                id: 1,
+                name: "Cape Coastal Properties",
+                description: "Specializing in coastal properties along the West Coast. We have the best selection of beachfront homes and investment properties.",
+                category: "Estate Agents",
+                area: "West Coast",
+                town: "Langebaan",
+                email: "info@capecoastalproperties.co.za",
+                phone: "021 456 7890",
+                address: "12 Beach Road, Langebaan",
+                website: "www.capecoastalproperties.co.za",
+                images: ["https://images.unsplash.com/photo-1560518883-ce09059eeffa?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2073&q=80"],
+                tier: "premium",
+                boostExpiry: new Date(Date.now() + 3*24*60*60*1000)
+            },
+            {
+                id: 2,
+                name: "Winelands Plumbing Solutions",
+                description: "24/7 emergency plumbing services in the Winelands region. We handle everything from leaks to full bathroom renovations.",
+                category: "Plumbers",
+                area: "Winelands",
+                town: "Stellenbosch",
+                email: "admin@winelandsplumbing.co.za",
+                phone: "021 123 4567",
+                address: "45 Vine Street, Stellenbosch",
+                website: "www.winelandsplumbing.co.za",
+                images: ["https://images.unsplash.com/photo-1635070041078-e363dbe005cb?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80"],
+                tier: "free",
+                boostExpiry: new Date(Date.now() + 2*24*60*60*1000)
+            },
+            {
+                id: 3,
+                name: "Atlantic Electric",
+                description: "Certified electricians for residential and commercial properties. We provide safe and reliable electrical solutions.",
+                category: "Electricians",
+                area: "Cape Metro",
+                town: "Atlantic Seaboard",
+                email: "info@atlanticelectric.co.za",
+                phone: "021 987 6543",
+                address: "67 Ocean View Drive, Green Point",
+                website: "www.atlanticelectric.co.za",
+                images: ["https://images.unsplash.com/photo-1581291518633-83b4ebd1d83e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80"],
+                tier: "enterprise",
+                boostExpiry: new Date(Date.now() + 7*24*60*60*1000)
+            },
+            {
+                id: 4,
+                name: "Hermanus Whale Tours",
+                description: "Experience the majestic whales of Hermanus with our expert guides. Boat tours and coastal watching available.",
+                category: "Tourism",
+                area: "Overberg",
+                town: "Hermanus",
+                email: "bookings@hermanuswhaletours.co.za",
+                phone: "028 312 2623",
+                address: "12 Harbour Road, Hermanus",
+                website: "www.hermanuswhaletours.co.za",
+                images: ["https://images.unsplash.com/photo-1578645510447-e4b6cbf56a89?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80"],
+                tier: "premium",
+                boostExpiry: new Date(Date.now() + 5*24*60*60*1000)
+            },
+            {
+                id: 5,
+                name: "Stellenbosch Vineyard Estate",
+                description: "Luxury wine estate offering tastings, tours, and event hosting in the heart of the Winelands.",
+                category: "Wine Estate",
+                area: "Winelands",
+                town: "Stellenbosch",
+                email: "info@stellenboschestate.co.za",
+                phone: "021 883 8965",
+                address: "45 Vine Street, Stellenbosch",
+                website: "www.stellenboschestate.co.za",
+                images: ["https://images.unsplash.com/photo-1593537612373-cc8e584186b9?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80"],
+                tier: "enterprise",
+                boostExpiry: new Date(Date.now() + 10*24*60*60*1000)
+            },
+            {
+                id: 6,
+                name: "Cape Town Digital Solutions",
+                description: "Comprehensive IT services for businesses in the Cape Metro area. From networking to cloud solutions.",
+                category: "IT Services",
+                area: "Cape Metro",
+                town: "Cape Town CBD",
+                email: "info@capetowndigital.co.za",
+                phone: "021 456 7890",
+                address: "67 Long Street, Cape Town",
+                website: "www.capetowndigital.co.za",
+                images: ["https://images.unsplash.com/photo-1580060839134-75a5edca2e99?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2071&q=80"],
+                tier: "premium",
+                boostExpiry: new Date(Date.now() + 2*24*60*60*1000)
+            }
+        ];
+
+        // Shopping cart
+        let cart = [];
+        let currentBusinessId = null;
+        
+        // Initialize the page
+        document.addEventListener('DOMContentLoaded', function() {
+            loadBusinessListings();
+            setupEventListeners();
+            updateCartUI();
+            
+            // Simulate AI activity
+            console.log("AI Agents initialized...");
+            console.log("Marketing AI: Posting to social media platforms");
+            console.log("Security AI: Monitoring for threats");
+            console.log("Payment AI: Processing transactions");
+            console.log("Support AI: Handling customer queries");
+            
+            // Simulate AI learning
+            setInterval(function() {
+                console.log("AI System: Learning from new data and optimizing...");
+            }, 30000);
+        });
+
+        // Load business listings on homepage
+        function loadBusinessListings() {
+            const container = document.getElementById('businessListings');
+            container.innerHTML = '';
+            
+            if (businessListings.length === 0) {
+                container.innerHTML = `
+                    <div class="col-12 text-center">
+                        <i class="fas fa-building fa-3x mb-3 text-muted"></i>
+                        <h4>No businesses listed yet</h4>
+                        <p class="text-muted">Be the first to add your business!</p>
+                        <button class="btn btn-primary mt-2" data-bs-toggle="modal" data-bs-target="#addBusinessModal">
+                            Add Your Business
+                        </button>
+                    </div>
+                `;
+                return;
+            }
+            
+            // Show only 3 featured businesses on homepage
+            const featuredBusinesses = businessListings.slice(0, 3);
+            
+            featuredBusinesses.forEach(business => {
+                const col = document.createElement('div');
+                col.className = 'col-md-4 mb-4';
+                
+                col.innerHTML = `
+                    <div class="card business-card h-100">
+                        <img src="${business.images[0]}" class="card-img-top business-img" alt="${business.name}" onerror="this.src='https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80'">
+                        <div class="card-body">
+                            <div class="d-flex justify-content-between align-items-start">
+                                <h5 class="card-title">${business.name}</h5>
+                                <span class="badge bg-${business.tier === 'premium' ? 'warning' : business.tier === 'enterprise' ? 'primary' : 'secondary'}">${business.tier}</span>
+                            </div>
+                            <p class="card-text">${business.description.substring(0, 100)}...</p>
+                            <div class="mb-2">
+                                <span class="badge bg-primary">${business.category}</span>
+                                <span class="badge bg-light text-dark">${business.town}, ${business.area}</span>
+                            </div>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <button class="btn btn-sm btn-outline-primary" onclick="showBusinessDetails(${business.id})">View Details</button>
+                                <button class="btn btn-sm btn-success" onclick="addToCart(${business.id}, 'boost')">
+                                    <i class="fas fa-bolt"></i> Boost R99
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                
+                container.appendChild(col);
+            });
+        }
+
+        // Load all business listings on listings page
+        function loadAllListings() {
+            const container = document.getElementById('listingsResults');
+            container.innerHTML = '';
+            
+            if (businessListings.length === 0) {
+                container.innerHTML = `
+                    <div class="col-12 text-center">
+                        <i class="fas fa-building fa-3x mb-3 text-muted"></i>
+                        <h4>No businesses listed yet</h4>
+                        <p class="text-muted">Be the first to add your business!</p>
+                        <button class="btn btn-primary mt-2" data-bs-toggle="modal" data-bs-target="#addBusinessModal">
+                            Add Your Business
+                        </button>
+                    </div>
+                `;
+                return;
+            }
+            
+            businessListings.forEach(business => {
+                const col = document.createElement('div');
+                col.className = 'col-md-6 mb-4';
+                
+                col.innerHTML = `
+                    <div class="card business-card h-100">
+                        <img src="${business.images[0]}" class="card-img-top business-img" alt="${business.name}" onerror="this.src='https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80'">
+                        <div class="card-body">
+                            <div class="d-flex justify-content-between align-items-start">
+                                <h5 class="card-title">${business.name}</h5>
+                                <span class="badge bg-${business.tier === 'premium' ? 'warning' : business.tier === 'enterprise' ? 'primary' : 'secondary'}">${business.tier}</span>
+                            </div>
+                            <p class="card-text">${business.description.substring(0, 100)}...</p>
+                            <div class="mb-2">
+                                <span class="badge bg-primary">${business.category}</span>
+                                <span class="badge bg-light text-dark">${business.town}, ${business.area}</span>
+                            </div>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <button class="btn btn-sm btn-outline-primary" onclick="showBusinessDetails(${business.id})">View Details</button>
+                                <button class="btn btn-sm btn-success" onclick="addToCart(${business.id}, 'boost')">
+                                    <i class="fas fa-bolt"></i> Boost R99
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                
+                container.appendChild(col);
+            });
+        }
+
+        // Filter listings based on criteria
+        function filterListings(area = null) {
+            if (area) {
+                document.getElementById('areaFilter').value = area;
+            }
+            applyFilters();
+        }
+
+        // Apply filters to listings
+        function applyFilters() {
+            const category = document.getElementById('categoryFilter').value;
+            const area = document.getElementById('areaFilter').value;
+            const town = document.getElementById('townFilter').value;
+            
+            const container = document.getElementById('listingsResults');
+            container.innerHTML = '';
+            
+            let filteredBusinesses = businessListings;
+            
+            if (category) {
+                filteredBusinesses = filteredBusinesses.filter(business => business.category === category);
+            }
+            
+            if (area) {
+                filteredBusinesses = filteredBusinesses.filter(business => business.area === area);
+            }
+            
+            if (town) {
+                filteredBusinesses = filteredBusinesses.filter(business => business.town === town);
+            }
+            
+            if (filteredBusinesses.length === 0) {
+                container.innerHTML = `
+                    <div class="col-12 text-center">
+                        <i class="fas fa-search fa-3x mb-3 text-muted"></i>
+                        <h4>No businesses found</h4>
+                        <p class="text-muted">Try adjusting your filters or <a href="#" onclick="clearFilters()">clear all filters</a></p>
+                    </div>
+                `;
+                return;
+            }
+            
+            document.getElementById('filterResultsText').textContent = `${filteredBusinesses.length} Businesses Found`;
+            
+            filteredBusinesses.forEach(business => {
+                const col = document.createElement('div');
+                col.className = 'col-md-6 mb-4';
+                
+                col.innerHTML = `
+                    <div class="card business-card h-100">
+                        <img src="${business.images[0]}" class="card-img-top business-img" alt="${business.name}" onerror="this.src='https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80'">
+                        <div class="card-body">
+                            <div class="d-flex justify-content-between align-items-start">
+                                <h5 class="card-title">${business.name}</h5>
+                                <span class="badge bg-${business.tier === 'premium' ? 'warning' : business.tier === 'enterprise' ? 'primary' : 'secondary'}">${business.tier}</span>
+                            </div>
+                            <p class="card-text">${business.description.substring(0, 100)}...</p>
+                            <div class="mb-2">
+                                <span class="badge bg-primary">${business.category}</span>
+                                <span class="badge bg-light text-dark">${business.town}, ${business.area}</span>
+                            </div>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <button class="btn btn-sm btn-outline-primary" onclick="showBusinessDetails(${business.id})">View Details</button>
+                                <button class="btn btn-sm btn-success" onclick="addToCart(${business.id}, 'boost')">
+                                    <i class="fas fa-bolt"></i> Boost R99
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                
+                container.appendChild(col);
+            });
+        }
+
+        // Clear all filters
+        function clearFilters() {
+            document.getElementById('categoryFilter').value = '';
+            document.getElementById('areaFilter').value = '';
+            document.getElementById('townFilter').value = '';
+            applyFilters();
+        }
+
+        // Show business details
+        function showBusinessDetails(businessId) {
+            const business = businessListings.find(b => b.id === businessId);
+            if (!business) return;
+            
+            currentBusinessId = businessId;
+            
+            // Update business details page
+            document.getElementById('businessName').textContent = business.name;
+            document.getElementById('businessCategory').textContent = business.category;
+            document.getElementById('businessLocation').innerHTML = `<i class="fas fa-map-marker-alt"></i> ${business.town}, ${business.area}`;
+            document.getElementById('businessDescription').textContent = business.description;
+            document.getElementById('businessContactPhone').innerHTML = `<i class="fas fa-phone"></i> Phone: ${business.phone}`;
+            document.getElementById('businessContactEmail').innerHTML = `<i class="fas fa-envelope"></i> Email: ${business.email}`;
+            document.getElementById('businessContactWebsite').innerHTML = `<i class="fas fa-globe"></i> Website: ${business.website}`;
+            document.getElementById('businessContactAddress').innerHTML = `<i class="fas fa-map-marker-alt"></i> Address: ${business.address}`;
+            
+            // Load gallery images
+            const galleryContainer = document.getElementById('businessGallery');
+            galleryContainer.innerHTML = '';
+            
+            business.images.forEach(image => {
+                const col = document.createElement('div');
+                col.className = 'col-md-4 mb-3';
+                col.innerHTML = `
+                    <img src="${image}" class="img-fluid rounded" alt="${business.name}" onerror="this.src='https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80'">
+                `;
+                galleryContainer.appendChild(col);
+            });
+            
+            // Show business details page
+            showPage('business-details-page');
+        }
+
+        // Setup event listeners
+        function setupEventListeners() {
+            // Login form
+            document.getElementById('loginForm').addEventListener('submit', function(e) {
+                e.preventDefault();
+                const email = document.getElementById('loginEmail').value;
+                const password = document.getElementById('loginPassword').value;
+                
+                // Simulate login
+                alert(`Login functionality would be implemented here. Email: ${email}`);
+                $('#loginModal').modal('hide');
+            });
+            
+            // Registration form
+            document.getElementById('registerForm').addEventListener('submit', function(e) {
+                e.preventDefault();
+                const firstName = document.getElementById('registerFirstName').value;
+                const lastName = document.getElementById('registerLastName').value;
+                const email = document.getElementById('registerEmail').value;
+                const phone = document.getElementById('registerPhone').value;
+                const password = document.getElementById('registerPassword').value;
+                
+                // Simulate registration
+                alert(`Registration functionality would be implemented here. Name: ${firstName} ${lastName}, Email: ${email}`);
+                $('#registerModal').modal('hide');
+            });
+            
+            // Add business form
+            document.getElementById('addBusinessForm').addEventListener('submit', function(e) {
+                e.preventDefault();
+                const name = document.getElementById('businessName').value;
+                const category = document.getElementById('businessCategory').value;
+                const area = document.getElementById('businessArea').value;
+                const town = document.getElementById('businessTown').value;
+                const description = document.getElementById('businessDescription').value;
+                const email = document.getElementById('businessEmail').value;
+                const phone = document.getElementById('businessPhone').value;
+                const website = document.getElementById('businessWebsite').value;
+                const address = document.getElementById('businessAddress').value;
+                const tier = document.querySelector('input[name="businessTier"]:checked').value;
+                
+                // Simulate adding business
+                alert(`Business would be added to database. Name: ${name}, Tier: ${tier}`);
+                $('#addBusinessModal').modal('hide');
+                
+                // Add to local array for demonstration
+                const newBusiness = {
+                    id: businessListings.length + 1,
+                    name,
+                    description,
+                    category,
+                    area,
+                    town,
+                    email,
+                    phone,
+                    website,
+                    address,
+                    images: [],
+                    tier,
+                    boostExpiry: new Date()
+                };
+                
+                businessListings.push(newBusiness);
+                loadBusinessListings();
+            });
+            
+            // Checkout button
+            document.getElementById('checkoutButton').addEventListener('click', function() {
+                if (cart.length === 0) {
+                    alert('Your cart is empty!');
+                    return;
+                }
+                
+                // Simulate checkout
+                alert('Proceeding to checkout with PayFast integration');
+                $('#cartModal').modal('hide');
+            });
+        }
+
+        // Add to cart function
+        function addToCart(businessId, productType) {
+            const business = businessListings.find(b => b.id === businessId);
+            if (!business) return;
+            
+            let productName, price;
+            
+            if (productType === 'premium') {
+                productName = `Premium Listing for ${business.name}`;
+                price = 199;
+            } else if (productType === 'boost') {
+                productName = `Boost for ${business.name}`;
+                price = 99;
+            } else if (productType === 'enterprise') {
+                productName = `Enterprise Listing for ${business.name}`;
+                price = 999;
+            }
+            
+            // Add to cart
+            cart.push({
+                id: Date.now(),
+                businessId,
+                businessName: business.name,
+                productName,
+                price,
+                type: productType
+            });
+            
+            updateCartUI();
+            
+            // Show confirmation
+            alert(`${productName} added to cart!`);
+        }
+
+        // Add boost to cart
+        function addBoostToCart() {
+            if (currentBusinessId) {
+                addToCart(currentBusinessId, 'boost');
+                $('#boostModal').modal('hide');
+            } else {
+                alert('Please select a business first');
+            }
+        }
+
+        // Remove from cart function
+        function removeFromCart(itemId) {
+            cart = cart.filter(item => item.id !== itemId);
+            updateCartUI();
+        }
+
+        // Update cart UI
+        function updateCartUI() {
+            const cartItems = document.getElementById('cartItems');
+            const cartTotal = document.getElementById('cartTotal');
+            const cartBadge = document.querySelector('.cart-badge');
+            
+            if (cart.length === 0) {
+                cartItems.innerHTML = '<p class="text-center">Your cart is empty</p>';
+                cartTotal.textContent = 'R0.00';
+                cartBadge.textContent = '0';
+                return;
+            }
+            
+            // Calculate total
+            let total = 0;
+            cartItems.innerHTML = '';
+            
+            cart.forEach(item => {
+                total += item.price;
+                
+                const itemElement = document.createElement('div');
+                itemElement.className = 'list-group-item';
+                itemElement.innerHTML = `
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div>
+                            <h6 class="my-0">${item.productName}</h6>
+                            <small>${item.businessName}</small>
+                        </div>
+                        <div>
+                            <span class="text-muted me-2">R${item.price.toFixed(2)}</span>
+                            <span class="remove-from-cart" onclick="removeFromCart(${item.id})">
+                                <i class="fas fa-trash"></i>
+                            </span>
+                        </div>
+                    </div>
+                `;
+                
+                cartItems.appendChild(itemElement);
+            });
+            
+            cartTotal.textContent = `R${total.toFixed(2)}`;
+            cartBadge.textContent = cart.length;
+        }
+
+        // Show specific page
+        function showPage(pageId) {
+            // Hide all pages
+            document.getElementById('home-page').style.display = 'none';
+            document.getElementById('listings-page').style.display = 'none';
+            document.getElementById('business-details-page').style.display = 'none';
+            
+            // Show requested page
+            document.getElementById(pageId).style.display = 'block';
+            
+            // If showing listings page, load all listings
+            if (pageId === 'listings-page') {
+                loadAllListings();
+            }
+            
+            // Scroll to top
+            window.scrollTo(0, 0);
+        }
+
+        // Chatbot functionality
+        let chatbotOpen = false;
+        
+        function toggleChatbot() {
+            const chatbot = document.getElementById('chatbot');
+            chatbotOpen = !chatbotOpen;
+            
+            if (chatbotOpen) {
+                chatbot.classList.add('open');
+            } else {
+                chatbot.classList.remove('open');
+            }
+        }
+        
+        function handleChatInput(e) {
+            if (e.key === 'Enter') {
+                sendMessage();
+            }
+        }
+        
+        function sendMessage() {
+            const input = document.getElementById('chatbot-input');
+            const message = input.value.trim();
+            
+            if (message === '') return;
+            
+            // Add user message
+            addMessage(message, 'user');
+            input.value = '';
+            
+            // Simulate AI response (in a real implementation, this would call an API)
+            setTimeout(() => {
+                let response;
+                
+                if (message.toLowerCase().includes('pricing') || message.toLowerCase().includes('cost')) {
+                    response = "We offer three plans: Free (R0), Premium (R199/month), and Enterprise (R999/month). Which one are you interested in?";
+                } else if (message.toLowerCase().includes('list') || message.toLowerCase().includes('add')) {
+                    response = "To list your business, click on the 'Add Your Business' button in the navigation menu. I can guide you through the process!";
+                } else if (message.toLowerCase().includes('area') || message.toLowerCase().includes('region')) {
+                    response = "We cover all areas of the Western Cape: West Coast, Winelands, Cape Metro, Overberg, Garden Route, and Karoo. Which area are you interested in?";
+                } else if (message.toLowerCase().includes('help') || message.toLowerCase().includes('support')) {
+                    response = "Our support team is available 24/7. You can also email us at support@capebiz.co.za or call 072 142 3215. How can I help you?";
+                } else if (message.toLowerCase().includes('email')) {
+                    response = "You can email us at info@capebiz.co.za for more detailed information or specific requests. Our team will respond within 24 hours.";
+                } else {
+                    response = "I'm here to help with any questions about our business directory. You can ask me about pricing, listing your business, or finding businesses in specific areas.";
+                }
+                
+                addMessage(response, 'bot');
+            }, 1000);
+        }
+        
+        function addMessage(text, sender) {
+            const messagesContainer = document.getElementById('chatbot-messages');
+            const messageElement = document.createElement('div');
+            messageElement.classList.add('message', sender);
+            messageElement.textContent = text;
+            
+            messagesContainer.appendChild(messageElement);
+            messagesContainer.scrollTop = messagesContainer.scrollHeight;
+        }
+    </script>
+</body>
+</html>
